@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Oderismo</title>
+    <link rel="icon" href="figures/icono.png" type="image/png" />
+    <link rel="apple-touch-icon" href="figures/icono.png" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('oderismo-theme');
+          if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#faf6f2',
+                100: '#f3ece4',
+                200: '#e7d6c7',
+                300: '#d7ba9e',
+                400: '#c3956f',
+                500: '#a87449',
+                600: '#8c5c36',
+                700: '#71492c',
+                800: '#5c3d27',
+                900: '#4d3422',
+              },
+            },
+            fontFamily: {
+              serifDisplay: ['ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
+            },
+          }
+        }
+      }
+    </script>
+    <link id="app-style" rel="stylesheet" href="" />
+
+    <script>
+      // Cache-busting simple: incrementa este valor en cada despliegue.
+      window.ASSET_VERSION = '2026-06-24.7';
+      document.getElementById('app-style').href = `css/style.css?v=${window.ASSET_VERSION}`;
+    </script>
+  </head>
+  <body>
+    <script>
+      // En app.html sí autoarrancamos al cargar.
+      window.ODERISMO_AUTO_INIT = true;
+    </script>
+    <main class="page-shell page-shell--app">
+      <div id="hero-bg" class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div id="app" class="shell-content">
+        <div class="min-h-screen flex items-center justify-center">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-700"></div>
+        </div>
+      </div>
+    </main>
+
+    <div class="hidden" aria-hidden="true">
+      <span class="dark:bg-gray-50 dark:bg-gray-700 dark:bg-gray-800 dark:bg-gray-900 dark:bg-green-900 dark:bg-yellow-900 dark:text-white dark:text-gray-200 dark:text-gray-300 dark:text-gray-400 dark:text-gray-500 dark:text-red-400 dark:text-green-300 dark:text-green-400 dark:text-yellow-200 dark:text-yellow-400 dark:text-yellow-600 dark:text-yellow-800 dark:border-gray-600 dark:border-gray-700 dark:hover:bg-gray-600 dark:hover:text-gray-300 dark:hover:border-blue-400"></span>
+    </div>
+
+    <script>
+      (async function () {
+        const v = window.ASSET_VERSION;
+        const loadScript = (src) => new Promise((res, rej) => {
+          const s = document.createElement('script');
+          s.src = src;
+          s.onload = res;
+          s.onerror = () => rej(new Error(src));
+          document.body.appendChild(s);
+        });
+        await loadScript(`js/config.js?v=${v}`);
+        const s2 = document.createElement('script');
+        s2.type = 'module';
+        s2.src = `js/app.js?v=${v}`;
+        document.body.appendChild(s2);
+      })().catch(console.error);
+    </script>
+
+    <script>
+      // Fondo versionado para evitar caché (vía CSS var).
+      const bg = document.getElementById('hero-bg');
+      if (bg) {
+        // En la app el hero se oculta por CSS, pero mantenemos el snippet por compatibilidad.
+        // No inyectamos URLs para evitar dependencias con el asset del landing.
+      }
+    </script>
+  </body>
+</html>
+

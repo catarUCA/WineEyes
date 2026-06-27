@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estructura — Tags Input Oderismo</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+      body { padding: 2rem; max-width: 28rem; font-family: system-ui, sans-serif; }
+      h1 { font-size: 1.1rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Componente de etiquetas (referencia DOM)</h1>
+    <p>El JS de producción monta este árbol en <code>#shot-modal-tags</code> vía <code>createTagsInput()</code>.</p>
+
+    <!-- Contenedor raíz (id en la app: shot-modal-tags) -->
+    <div class="tags-input" id="demo-tags">
+      <!-- Chips + input -->
+      <div class="tags-input-inner" role="list">
+        <span class="tags-input-chip" style="--tag-color:#6366f1">
+          <span class="tags-input-chip-label">coche</span>
+          <button type="button" class="tags-input-chip-remove" aria-label="Quitar coche">×</button>
+        </span>
+        <div class="tags-input-field-wrap">
+          <input type="text" class="tags-input-field" autocomplete="off" spellcheck="false"
+            placeholder="Escribe y pulsa Enter…" aria-autocomplete="list" aria-controls="tags-suggest-list" />
+          <span class="tags-input-ghost" aria-hidden="true">coches</span>
+        </div>
+      </div>
+
+      <!-- 2) Sugerencia difusa -->
+      <div class="tags-input-hint" role="status">
+        ¿Quisiste decir «<button type="button" class="tags-input-hint-btn">coche</button>»? Haz clic para usarla.
+      </div>
+
+      <!-- 3) Barra Enter / Tab -->
+      <p class="tags-input-ac-bar" role="status">Pulsa Enter o Tab para añadir «coche»</p>
+
+      <!-- Listado de coincidencias -->
+      <ul id="tags-suggest-list" class="tags-input-suggest" role="listbox">
+        <li role="option" class="tags-input-suggest-item is-active">
+          <span class="tags-input-suggest-swatch" style="background:#6366f1"></span>
+          <span class="tags-input-suggest-label">coche</span>
+          <span class="tags-input-suggest-badge">Tab / Enter</span>
+        </li>
+      </ul>
+    </div>
+
+    <p><small>Módulos: <code>js/tag-text-utils.js</code> (normalización + Levenshtein) y <code>js/tags-input.js</code>.</small></p>
+  </body>
+</html>

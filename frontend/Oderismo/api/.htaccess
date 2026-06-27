@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# Apache/CGI no reenvía Authorization a PHP por defecto (JWT Bearer → 401).
+RewriteCond %{HTTP:Authorization} .
+RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+# Si el fichero/directorio existe, sirve directamente.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Enruta todo a index.php
+RewriteRule ^ index.php [QSA,L]
+

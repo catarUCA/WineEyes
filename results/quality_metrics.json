@@ -1,0 +1,138 @@
+{
+  "gemma4:26b": {
+    "Animals": {
+      "A_fidelidad_mean": 5.0,
+      "A_fidelidad_std": 0.0,
+      "B_iconografia_mean": 5.0,
+      "B_iconografia_std": 0.0,
+      "C_completitud_mean": 5.0,
+      "C_completitud_std": 0.0,
+      "hal_mean": 0.0,
+      "errors": 0,
+      "total": 10
+    },
+    "Classic drawings": {
+      "A_fidelidad_mean": 4.1,
+      "A_fidelidad_std": 1.52,
+      "B_iconografia_mean": 5.0,
+      "B_iconografia_std": 0.0,
+      "C_completitud_mean": 4.8,
+      "C_completitud_std": 0.63,
+      "hal_mean": 0.3,
+      "errors": 0,
+      "total": 10
+    },
+    "Modern labels": {
+      "A_fidelidad_mean": 4.9,
+      "A_fidelidad_std": 0.32,
+      "B_iconografia_mean": 5.0,
+      "B_iconografia_std": 0.0,
+      "C_completitud_mean": 5.0,
+      "C_completitud_std": 0.0,
+      "hal_mean": 0.0,
+      "errors": 0,
+      "total": 10
+    },
+    "Illustrious figures": {
+      "A_fidelidad_mean": 5.0,
+      "A_fidelidad_std": 0.0,
+      "B_iconografia_mean": 5.0,
+      "B_iconografia_std": 0.0,
+      "C_completitud_mean": 5.0,
+      "C_completitud_std": 0.0,
+      "hal_mean": 0.0,
+      "errors": 0,
+      "total": 10
+    },
+    "Text only": {
+      "A_fidelidad_mean": 4.4,
+      "A_fidelidad_std": 0.97,
+      "B_iconografia_mean": 5.0,
+      "B_iconografia_std": 0.0,
+      "C_completitud_mean": 5.0,
+      "C_completitud_std": 0.0,
+      "hal_mean": 0.1,
+      "errors": 0,
+      "total": 10
+    },
+    "Overall": {
+      "A_fidelidad_mean": 4.68,
+      "A_fidelidad_std": 0.87,
+      "B_iconografia_mean": 5.0,
+      "B_iconografia_std": 0.0,
+      "C_completitud_mean": 4.96,
+      "C_completitud_std": 0.28,
+      "hal_mean": 0.08,
+      "errors": 0,
+      "total": 50
+    }
+  },
+  "qwen3-vl:8b": {
+    "Animals": {
+      "A_fidelidad_mean": 4.0,
+      "A_fidelidad_std": 1.41,
+      "B_iconografia_mean": 3.5,
+      "B_iconografia_std": 0.71,
+      "C_completitud_mean": 4.0,
+      "C_completitud_std": 1.41,
+      "hal_mean": 0.5,
+      "errors": 8,
+      "total": 10
+    },
+    "Classic drawings": {
+      "A_fidelidad_mean": null,
+      "A_fidelidad_std": null,
+      "B_iconografia_mean": null,
+      "B_iconografia_std": null,
+      "C_completitud_mean": null,
+      "C_completitud_std": null,
+      "hal_mean": null,
+      "errors": 10,
+      "total": 10
+    },
+    "Modern labels": {
+      "A_fidelidad_mean": 5.0,
+      "A_fidelidad_std": null,
+      "B_iconografia_mean": 5.0,
+      "B_iconografia_std": null,
+      "C_completitud_mean": 5.0,
+      "C_completitud_std": null,
+      "hal_mean": 2.0,
+      "errors": 9,
+      "total": 10
+    },
+    "Illustrious figures": {
+      "A_fidelidad_mean": 5.0,
+      "A_fidelidad_std": null,
+      "B_iconografia_mean": 5.0,
+      "B_iconografia_std": null,
+      "C_completitud_mean": 5.0,
+      "C_completitud_std": null,
+      "hal_mean": 1.0,
+      "errors": 9,
+      "total": 10
+    },
+    "Text only": {
+      "A_fidelidad_mean": null,
+      "A_fidelidad_std": null,
+      "B_iconografia_mean": null,
+      "B_iconografia_std": null,
+      "C_completitud_mean": null,
+      "C_completitud_std": null,
+      "hal_mean": null,
+      "errors": 10,
+      "total": 10
+    },
+    "Overall": {
+      "A_fidelidad_mean": 4.5,
+      "A_fidelidad_std": 1.0,
+      "B_iconografia_mean": 4.25,
+      "B_iconografia_std": 0.96,
+      "C_completitud_mean": 4.5,
+      "C_completitud_std": 1.0,
+      "hal_mean": 1.0,
+      "errors": 46,
+      "total": 50
+    }
+  }
+}

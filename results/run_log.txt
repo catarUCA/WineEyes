@@ -1,0 +1,28 @@
+2026-06-19T11:21:00.999470+00:00 audit_inputs strict=False
+2026-06-19T11:21:01.004600+00:00 audit_inputs status=pass checks=18 failures=0
+2026-06-19T11:23:08.114637+00:00 audit_inputs strict=False
+2026-06-19T11:23:08.118562+00:00 audit_inputs status=pass checks=18 failures=0
+2026-06-19T11:23:49.237824+00:00 unittest discover: 17 tests passed; local pure-logic validation only
+2026-06-19T11:23:49.389754+00:00 build_eval_indices reset=True batch_size=16
+2026-06-19T11:23:49.390024+00:00 build_eval_indices FAILED: RuntimeError: qdrant-client is required for index and retrieval commands
+2026-06-19T11:24:35.379575+00:00 unittest discover: 18 tests passed; local pure-logic validation only
+2026-06-19T11:24:35.486381+00:00 audit_inputs strict=False
+2026-06-19T11:24:35.490699+00:00 audit_inputs status=pass checks=18 failures=0
+2026-06-19T11:32:30.519537+00:00 audit_inputs strict=False
+2026-06-19T11:32:31.167940+00:00 audit_inputs status=pass checks=23 failures=0
+2026-06-19T11:32:41.900462+00:00 build_eval_indices reset=True batch_size=16
+2026-06-19T11:34:59.432485+00:00 run_retrieval started
+2026-06-19T11:35:13.976199+00:00 run_retrieval FAILED: RuntimeError: ocr_vlm_hybrid_segmented:dense returned 4 unique labels; expected 50
+2026-06-19T11:35:45.896080+00:00 build_eval_indices reset=True batch_size=16
+2026-06-19T11:41:08.739507+00:00 build_eval_indices reset=True batch_size=16
+2026-06-19T11:47:31.815156+00:00 build_eval_indices completed
+2026-06-19T11:51:05.168523+00:00 run_retrieval started
+2026-06-19T11:51:13.828192+00:00 run_retrieval FAILED: RuntimeError: ocr_vlm_hybrid_full:sparse returned 0 unique labels; expected 50
+2026-06-19T11:54:50.686155+00:00 run_retrieval started
+2026-06-19T11:55:06.345000+00:00 run_retrieval completed output=results/rankings_full.json
+2026-06-19T11:55:19.438971+00:00 evaluate_rankings started
+2026-06-19T11:55:19.446107+00:00 evaluate_rankings completed
+2026-06-19T11:55:44.215071+00:00 benchmark_hybrid system=ocr_vlm_hybrid_segmented repeats=20 warmup=2
+2026-06-19T11:56:57.594728+00:00 benchmark_hybrid completed
+2026-06-19T11:57:10.892376+00:00 audit_inputs strict=True
+2026-06-19T11:57:11.753418+00:00 audit_inputs status=pass checks=355 failures=0

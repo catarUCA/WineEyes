@@ -1,0 +1,16 @@
+query_id,query,type
+q01,etiqueta de Jerez,textual
+q02,animales,iconografica_simple
+q03,una mujer con flores,iconografica_relacional
+q04,Sanlúcar de Barrameda,textual
+q05,jerez amontillado,textual
+q06,manzanilla en rama,textual
+q07,brandy o anís,textual
+q08,caballo,iconografica_simple
+q09,virgen o santo,iconografica_simple
+q10,ave o águila,iconografica_simple
+q11,racimos de uvas,iconografica_simple
+q12,torero y toro,iconografica_relacional
+q13,un escudo con un león y corona,iconografica_relacional
+q14,una mujer con sombrero,iconografica_relacional
+q15,persona con muletas,iconografica_relacional

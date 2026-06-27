@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Establecer contraseña — Oderismo</title>
+    <link rel="icon" href="figures/icono.png" type="image/png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#faf6f2',
+                100: '#f3ece4',
+                200: '#e7d6c7',
+                300: '#d7ba9e',
+                400: '#c3956f',
+                500: '#a87449',
+                600: '#8c5c36',
+                700: '#71492c',
+                800: '#5c3d27',
+                900: '#4d3422',
+              },
+            },
+            fontFamily: {
+              serifDisplay: ['ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
+            },
+          },
+        },
+      };
+    </script>
+    <link id="app-style" rel="stylesheet" href="" />
+    <script>
+      window.ASSET_VERSION = '2026-06-02.16';
+      document.getElementById('app-style').href = `css/style.css?v=${window.ASSET_VERSION}`;
+    </script>
+  </head>
+  <body class="min-h-screen bg-brand-50 text-brand-900">
+    <main class="min-h-screen flex items-center justify-center p-4">
+      <div class="glass-card w-full max-w-md">
+        <h1 class="title title-sm font-serifDisplay">Nueva contraseña</h1>
+        <p class="subtitle subtitle-sm font-serifDisplay mt-1">
+          Elige una contraseña de al menos 8 caracteres.
+        </p>
+
+        <form id="set-password-form" class="space-y-4 mt-6">
+          <div>
+            <label class="block text-sm font-medium text-brand-800 mb-1" for="new-password">Contraseña</label>
+            <input id="new-password" type="password" required minlength="8" autocomplete="new-password"
+              class="w-full px-3 py-2 border border-brand-200 rounded-lg bg-white/80 focus:ring-4 focus:ring-brand-200 outline-none" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-brand-800 mb-1" for="new-password-confirm">Repetir contraseña</label>
+            <input id="new-password-confirm" type="password" required minlength="8" autocomplete="new-password"
+              class="w-full px-3 py-2 border border-brand-200 rounded-lg bg-white/80 focus:ring-4 focus:ring-brand-200 outline-none" />
+          </div>
+          <p id="set-password-error" class="text-red-500 text-sm is-hidden"></p>
+          <p id="set-password-success" class="text-green-700 text-sm is-hidden"></p>
+          <button type="submit" id="set-password-submit" class="w-full btn btn-primary">Guardar contraseña</button>
+        </form>
+
+        <p class="mt-6 text-center">
+          <a href="index.html" class="text-sm text-brand-600 underline">Volver al inicio</a>
+        </p>
+      </div>
+    </main>
+
+    <script>
+      (async function () {
+        const params = new URLSearchParams(location.search);
+        const token = params.get('token')?.trim() || '';
+        const form = document.getElementById('set-password-form');
+        const errEl = document.getElementById('set-password-error');
+        const okEl = document.getElementById('set-password-success');
+        const submitBtn = document.getElementById('set-password-submit');
+
+        if (!token) {
+          if (errEl) {
+            errEl.textContent = 'Falta el enlace de recuperación. Solicita uno nuevo desde el acceso al sistema.';
+            errEl.classList.remove('is-hidden');
+          }
+          form?.querySelectorAll('input, button[type="submit"]').forEach((el) => { el.disabled = true; });
+          return;
+        }
+
+        form?.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          errEl?.classList.add('is-hidden');
+          okEl?.classList.add('is-hidden');
+
+          const p1 = document.getElementById('new-password')?.value || '';
+          const p2 = document.getElementById('new-password-confirm')?.value || '';
+          if (p1.length < 8) {
+            if (errEl) {
+              errEl.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+              errEl.classList.remove('is-hidden');
+            }
+            return;
+          }
+          if (p1 !== p2) {
+            if (errEl) {
+              errEl.textContent = 'Las contraseñas no coinciden.';
+              errEl.classList.remove('is-hidden');
+            }
+            return;
+          }
+
+          if (submitBtn) submitBtn.disabled = true;
+          try {
+            const v = window.ASSET_VERSION;
+            await new Promise((res, rej) => {
+              const s = document.createElement('script');
+              s.src = `js/config.js?v=${v}`;
+              s.onload = res;
+              s.onerror = rej;
+              document.body.appendChild(s);
+            });
+            const { api } = await import(`./js/api.js?v=${v}`);
+            await api.setPassword(token, p1);
+            if (okEl) {
+              okEl.textContent = 'Contraseña guardada. Ya puedes iniciar sesión.';
+              okEl.classList.remove('is-hidden');
+            }
+            form?.querySelectorAll('input').forEach((el) => { el.disabled = true; });
+          } catch (err) {
+            if (errEl) {
+              errEl.textContent = err?.message || 'No se pudo guardar la contraseña';
+              errEl.classList.remove('is-hidden');
+            }
+            if (submitBtn) submitBtn.disabled = false;
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

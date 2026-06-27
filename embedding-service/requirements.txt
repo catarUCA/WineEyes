@@ -1,0 +1,4 @@
+FlagEmbedding
+numpy
+requests
+python-dotenv

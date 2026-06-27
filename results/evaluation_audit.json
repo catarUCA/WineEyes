@@ -1,0 +1,2137 @@
+{
+  "generated_at": "2026-06-19T11:57:11.751419+00:00",
+  "strict": true,
+  "status": "pass",
+  "checks": [
+    {
+      "name": "query_count",
+      "status": "pass",
+      "critical": true,
+      "detail": "found=15 expected=15"
+    },
+    {
+      "name": "ocr_count",
+      "status": "pass",
+      "critical": true,
+      "detail": "found=50 expected=50"
+    },
+    {
+      "name": "ocr_canonical_ids",
+      "status": "pass",
+      "critical": true,
+      "detail": "missing=[] unknown=[]"
+    },
+    {
+      "name": "ocr_nonempty",
+      "status": "pass",
+      "critical": true,
+      "detail": "empty=[]"
+    },
+    {
+      "name": "vlm_solo_count",
+      "status": "pass",
+      "critical": true,
+      "detail": "found=50 expected=50"
+    },
+    {
+      "name": "vlm_solo_canonical_ids",
+      "status": "pass",
+      "critical": true,
+      "detail": "missing=[] unknown=[]"
+    },
+    {
+      "name": "vlm_solo_nonempty",
+      "status": "pass",
+      "critical": true,
+      "detail": "empty=[]"
+    },
+    {
+      "name": "vlm_fusion_count",
+      "status": "pass",
+      "critical": true,
+      "detail": "found=50 expected=50"
+    },
+    {
+      "name": "vlm_fusion_canonical_ids",
+      "status": "pass",
+      "critical": true,
+      "detail": "missing=[] unknown=[]"
+    },
+    {
+      "name": "vlm_fusion_nonempty",
+      "status": "pass",
+      "critical": true,
+      "detail": "empty=[]"
+    },
+    {
+      "name": "representation_id_sets_identical",
+      "status": "pass",
+      "critical": true,
+      "detail": "ocr/vlm_solo/vlm_fusion"
+    },
+    {
+      "name": "image_count",
+      "status": "pass",
+      "critical": true,
+      "detail": "found=50 missing=[]"
+    },
+    {
+      "name": "qrels_query_coverage",
+      "status": "pass",
+      "critical": true,
+      "detail": "missing=[] extra=[]"
+    },
+    {
+      "name": "qrels_ids_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "queries_have_qrels",
+      "status": "pass",
+      "critical": true,
+      "detail": "missing=[]"
+    },
+    {
+      "name": "qrels_format",
+      "status": "pass",
+      "critical": true,
+      "detail": "binary=True path=data\\qrels.json"
+    },
+    {
+      "name": "qdrant_available",
+      "status": "pass",
+      "critical": true,
+      "detail": "connected"
+    },
+    {
+      "name": "collection_solo_ocr_eval_ids",
+      "status": "pass",
+      "critical": true,
+      "detail": "points=50 distinct_eval_ids=50"
+    },
+    {
+      "name": "collection_solo_ocr_payload",
+      "status": "pass",
+      "critical": true,
+      "detail": "bad_payload_indices=[]"
+    },
+    {
+      "name": "collection_solo_ocr_no_external_docs",
+      "status": "pass",
+      "critical": true,
+      "detail": "external=[]"
+    },
+    {
+      "name": "collection_solo_ocr_one_full_per_label",
+      "status": "pass",
+      "critical": true,
+      "detail": "invalid=[]"
+    },
+    {
+      "name": "collection_solo_vlm_eval_ids",
+      "status": "pass",
+      "critical": true,
+      "detail": "points=50 distinct_eval_ids=50"
+    },
+    {
+      "name": "collection_solo_vlm_payload",
+      "status": "pass",
+      "critical": true,
+      "detail": "bad_payload_indices=[]"
+    },
+    {
+      "name": "collection_solo_vlm_no_external_docs",
+      "status": "pass",
+      "critical": true,
+      "detail": "external=[]"
+    },
+    {
+      "name": "collection_solo_vlm_one_full_per_label",
+      "status": "pass",
+      "critical": true,
+      "detail": "invalid=[]"
+    },
+    {
+      "name": "collection_ocr_vlm_eval_ids",
+      "status": "pass",
+      "critical": true,
+      "detail": "points=50 distinct_eval_ids=50"
+    },
+    {
+      "name": "collection_ocr_vlm_payload",
+      "status": "pass",
+      "critical": true,
+      "detail": "bad_payload_indices=[]"
+    },
+    {
+      "name": "collection_ocr_vlm_no_external_docs",
+      "status": "pass",
+      "critical": true,
+      "detail": "external=[]"
+    },
+    {
+      "name": "collection_ocr_vlm_one_full_per_label",
+      "status": "pass",
+      "critical": true,
+      "detail": "invalid=[]"
+    },
+    {
+      "name": "collection_ocr_vlm_hybrid_full_eval_ids",
+      "status": "pass",
+      "critical": true,
+      "detail": "points=50 distinct_eval_ids=50"
+    },
+    {
+      "name": "collection_ocr_vlm_hybrid_full_payload",
+      "status": "pass",
+      "critical": true,
+      "detail": "bad_payload_indices=[]"
+    },
+    {
+      "name": "collection_ocr_vlm_hybrid_full_no_external_docs",
+      "status": "pass",
+      "critical": true,
+      "detail": "external=[]"
+    },
+    {
+      "name": "collection_ocr_vlm_hybrid_full_one_full_per_label",
+      "status": "pass",
+      "critical": true,
+      "detail": "invalid=[]"
+    },
+    {
+      "name": "collection_ocr_vlm_hybrid_segmented_eval_ids",
+      "status": "pass",
+      "critical": true,
+      "detail": "points=2704 distinct_eval_ids=50"
+    },
+    {
+      "name": "collection_ocr_vlm_hybrid_segmented_payload",
+      "status": "pass",
+      "critical": true,
+      "detail": "bad_payload_indices=[]"
+    },
+    {
+      "name": "collection_ocr_vlm_hybrid_segmented_no_external_docs",
+      "status": "pass",
+      "critical": true,
+      "detail": "external=[]"
+    },
+    {
+      "name": "collection_ocr_vlm_hybrid_segmented_one_full_per_label",
+      "status": "pass",
+      "critical": true,
+      "detail": "invalid=[]"
+    },
+    {
+      "name": "ranking_query_set",
+      "status": "pass",
+      "critical": true,
+      "detail": "found=15 expected=15"
+    },
+    {
+      "name": "ranking_q01_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q01_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q01_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q01_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q01_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q01_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q01_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q01_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q01_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q01_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q01_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q01_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q01_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q01_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q01_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q01_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q01_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q01_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q01_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q01_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q01_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q02_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q02_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q02_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q02_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q02_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q02_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q02_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q02_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q02_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q02_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q02_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q02_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q02_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q02_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q02_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q02_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q02_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q02_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q02_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q02_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q02_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q03_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q03_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q03_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q03_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q03_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q03_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q03_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q03_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q03_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q03_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q03_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q03_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q03_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q03_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q03_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q03_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q03_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q03_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q03_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q03_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q03_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q04_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q04_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q04_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q04_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q04_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q04_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q04_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q04_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q04_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q04_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q04_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q04_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q04_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q04_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q04_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q04_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q04_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q04_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q04_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q04_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q04_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q05_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q05_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q05_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q05_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q05_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q05_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q05_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q05_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q05_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q05_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q05_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q05_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q05_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q05_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q05_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q05_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q05_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q05_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q05_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q05_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q05_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q06_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q06_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q06_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q06_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q06_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q06_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q06_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q06_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q06_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q06_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q06_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q06_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q06_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q06_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q06_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q06_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q06_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q06_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q06_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q06_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q06_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q07_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q07_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q07_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q07_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q07_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q07_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q07_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q07_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q07_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q07_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q07_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q07_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q07_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q07_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q07_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q07_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q07_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q07_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q07_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q07_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q07_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q08_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q08_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q08_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q08_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q08_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q08_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q08_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q08_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q08_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q08_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q08_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q08_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q08_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q08_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q08_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q08_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q08_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q08_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q08_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q08_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q08_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q09_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q09_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q09_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q09_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q09_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q09_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q09_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q09_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q09_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q09_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q09_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q09_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q09_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q09_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q09_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q09_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q09_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q09_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q09_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q09_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q09_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q10_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q10_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q10_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q10_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q10_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q10_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q10_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q10_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q10_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q10_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q10_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q10_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q10_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q10_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q10_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q10_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q10_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q10_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q10_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q10_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q10_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q11_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q11_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q11_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q11_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q11_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q11_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q11_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q11_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q11_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q11_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q11_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q11_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q11_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q11_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q11_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q11_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q11_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q11_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q11_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q11_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q11_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q12_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q12_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q12_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q12_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q12_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q12_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q12_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q12_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q12_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q12_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q12_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q12_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q12_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q12_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q12_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q12_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q12_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q12_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q12_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q12_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q12_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q13_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q13_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q13_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q13_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q13_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q13_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q13_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q13_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q13_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q13_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q13_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q13_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q13_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q13_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q13_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q13_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q13_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q13_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q13_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q13_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q13_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q14_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q14_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q14_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q14_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q14_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q14_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q14_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q14_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q14_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q14_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q14_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q14_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q14_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q14_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q14_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q14_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q14_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q14_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q14_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q14_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q14_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q15_solo_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q15_solo_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q15_solo_ocr_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q15_solo_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q15_solo_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q15_solo_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q15_ocr_vlm_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q15_ocr_vlm_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q15_ocr_vlm_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q15_ocr_vlm_hybrid_full_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q15_ocr_vlm_hybrid_full_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q15_ocr_vlm_hybrid_full_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q15_ocr_vlm_hybrid_segmented_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50 unique=50"
+    },
+    {
+      "name": "ranking_q15_ocr_vlm_hybrid_segmented_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q15_ocr_vlm_hybrid_segmented_complete",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=50"
+    },
+    {
+      "name": "ranking_q15_bm25_ocr_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q15_bm25_ocr_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q15_bm25_fusion_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q15_bm25_fusion_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "ranking_q15_clip_zeroshot_unique",
+      "status": "pass",
+      "critical": true,
+      "detail": "depth=10 unique=10"
+    },
+    {
+      "name": "ranking_q15_clip_zeroshot_known",
+      "status": "pass",
+      "critical": true,
+      "detail": "unknown=[]"
+    },
+    {
+      "name": "all_systems_use_same_queries",
+      "status": "pass",
+      "critical": true,
+      "detail": "system sets identical across queries"
+    },
+    {
+      "name": "no_offset_id_translation",
+      "status": "pass",
+      "critical": true,
+      "detail": "canonical eval_id; no offsets or positional translation"
+    }
+  ]
+}

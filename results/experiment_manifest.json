@@ -1,0 +1,150 @@
+{
+  "generated_at": "2026-06-19T11:56:57.461330+00:00",
+  "python": {
+    "version": "3.12.10",
+    "executable": "python"
+  },
+  "packages": {
+    "FlagEmbedding": "1.4.0",
+    "qdrant-client": "1.18.0",
+    "numpy": "2.4.6",
+    "torch": "2.12.1"
+  },
+  "model": {
+    "name": "BAAI/bge-m3",
+    "requested_revision": null,
+    "resolved_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "use_fp16": false,
+    "device": "cpu",
+    "batch_size": 8
+  },
+  "qdrant": {
+    "server_version": "1.17.1",
+    "mode": "remote",
+    "url": "http://localhost:6333",
+    "local_path": "results\\qdrant_eval_storage"
+  },
+  "system": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "cpu": "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel",
+    "gpu": {
+      "available": false,
+      "devices": [],
+      "torch_version": "2.12.1+cpu"
+    }
+  },
+  "git_commit": "b1f3c25455c8af2cf6bf2498ae6c7393d6a4ef70",
+  "git_dirty": true,
+  "index_build": [
+    {
+      "system": "solo_ocr",
+      "collection": "wineeyes_eval_solo_ocr_dense",
+      "status": "built",
+      "points": 50,
+      "eval_ids": 50
+    },
+    {
+      "system": "solo_vlm",
+      "collection": "wineeyes_eval_solo_vlm_dense",
+      "status": "built",
+      "points": 50,
+      "eval_ids": 50
+    },
+    {
+      "system": "ocr_vlm",
+      "collection": "wineeyes_eval_ocr_vlm_dense",
+      "status": "built",
+      "points": 50,
+      "eval_ids": 50
+    },
+    {
+      "system": "ocr_vlm_hybrid_full",
+      "collection": "wineeyes_eval_ocr_vlm_hybrid_full",
+      "status": "built",
+      "points": 50,
+      "eval_ids": 50
+    },
+    {
+      "system": "ocr_vlm_hybrid_segmented",
+      "collection": "wineeyes_eval_ocr_vlm_hybrid_segmented",
+      "status": "built",
+      "points": 2704,
+      "eval_ids": 50
+    }
+  ],
+  "benchmark": {
+    "system": "ocr_vlm_hybrid_segmented",
+    "queries": 15,
+    "repeats_per_query": 20,
+    "warmup_rounds": 2,
+    "model_load_ms": 6630.300499964505,
+    "candidate_depth_per_branch": 2704,
+    "rrf_k": 60,
+    "summary": {
+      "dense_encoding": {
+        "count": 300,
+        "mean_ms": 71.64212966725852,
+        "median_ms": 70.31475001713261,
+        "std_ms": 3.7866473601565547,
+        "p95_ms": 78.71439994778484,
+        "min_ms": 66.90069998148829,
+        "max_ms": 97.3380000796169
+      },
+      "sparse_encoding": {
+        "count": 300,
+        "mean_ms": 70.6003156665247,
+        "median_ms": 69.25620004767552,
+        "std_ms": 4.281827482358268,
+        "p95_ms": 77.86169997416437,
+        "min_ms": 65.91580004896969,
+        "max_ms": 100.35319998860359
+      },
+      "dense_search": {
+        "count": 300,
+        "mean_ms": 35.06880433221037,
+        "median_ms": 31.896599975880235,
+        "std_ms": 18.009909155236304,
+        "p95_ms": 45.228200033307076,
+        "min_ms": 28.947099926881492,
+        "max_ms": 171.86379991471767
+      },
+      "sparse_search": {
+        "count": 300,
+        "mean_ms": 15.112870328205949,
+        "median_ms": 11.979399947449565,
+        "std_ms": 15.702887929797836,
+        "p95_ms": 34.53740000259131,
+        "min_ms": 3.3644000068306923,
+        "max_ms": 150.56169999297708
+      },
+      "segment_aggregation": {
+        "count": 300,
+        "mean_ms": 6.886627335722248,
+        "median_ms": 3.0620499746873975,
+        "std_ms": 22.606936387827385,
+        "p95_ms": 4.36319992877543,
+        "min_ms": 2.1422000136226416,
+        "max_ms": 150.66540008410811
+      },
+      "rrf": {
+        "count": 300,
+        "mean_ms": 0.08424499731821318,
+        "median_ms": 0.08349993731826544,
+        "std_ms": 0.01220317861159321,
+        "p95_ms": 0.10169995948672295,
+        "min_ms": 0.0491999089717865,
+        "max_ms": 0.15750003512948751
+      },
+      "total": {
+        "count": 300,
+        "mean_ms": 199.39940633135848,
+        "median_ms": 189.37239999650046,
+        "std_ms": 33.218895340042444,
+        "p95_ms": 313.6600999860093,
+        "min_ms": 170.4169000731781,
+        "max_ms": 365.39629998151213
+      }
+    }
+  }
+}

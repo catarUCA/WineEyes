@@ -1,0 +1,17 @@
+{
+  "ratios_s_per_mb": {
+    "ocr": 9.19,
+    "crop": 8.65,
+    "describe": 44.46,
+    "index": 6.71
+  },
+  "weights": {
+    "ocr": 0.133,
+    "crop": 0.125,
+    "describe": 0.644,
+    "index": 0.097
+  },
+  "reference_mb": 0.6,
+  "calibrated_at": "2026-06-05T09:23:05.608061",
+  "samples": 10
+}

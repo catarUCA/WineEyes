@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="es" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Oderismo</title>
+    <link rel="icon" href="figures/icono.png" type="image/png" />
+    <link rel="apple-touch-icon" href="figures/icono.png" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('oderismo-theme');
+          if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#faf6f2',
+                100: '#f3ece4',
+                200: '#e7d6c7',
+                300: '#d7ba9e',
+                400: '#c3956f',
+                500: '#a87449',
+                600: '#8c5c36',
+                700: '#71492c',
+                800: '#5c3d27',
+                900: '#4d3422',
+              },
+            },
+            fontFamily: {
+              serifDisplay: ['ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
+            },
+          }
+        }
+      }
+    </script>
+    <link id="app-style" rel="stylesheet" href="" />
+
+    <script>
+      // Cache-busting simple: incrementa este valor en cada despliegue.
+      window.ASSET_VERSION = '2026-06-24.7';
+      document.getElementById('app-style').href = `css/style.css?v=${window.ASSET_VERSION}`;
+    </script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <div id="hero-bg" class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="landing-scene">
+        <div class="landing-hero-figure">
+          <img
+            id="landing-odero-img"
+            class="landing-odero"
+            src="figures/oderoFondoTransparente.png"
+            alt=""
+            decoding="async"
+          />
+        </div>
+        <button
+          type="button"
+          id="landing-intro-open"
+          class="landing-intro-open"
+          aria-label="Información sobre Oderismo"
+          aria-expanded="false"
+          aria-controls="landing-intro-panel"
+        >¿Qué es Oderismo?</button>
+        <div id="landing" class="landing-stack">
+          <aside class="landing-frame-col" aria-label="Muestra aleatoria de etiquetas">
+            <div class="landing-frame">
+              <div class="landing-frame-mat">
+                <div id="landing-frame-stage" class="landing-frame-stage" aria-live="polite"></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <div class="landing-partners" aria-label="Enlaces de entidades colaboradoras">
+          <a class="partner-link" href="https://thesherrygallery.com/" target="_blank" rel="noopener noreferrer">
+            <img id="partner-sherry" class="partner-logo" src="figures/sherryGallery.png" alt="The Sherry Gallery" decoding="async" />
+          </a>
+          <a class="partner-link" href="https://ucatedravino.com/" target="_blank" rel="noopener noreferrer">
+            <img id="partner-catedra" class="partner-logo" src="figures/catedraFondoBlanco.png" alt="Cátedra Vino, Sociedad y Sostenibilidad" decoding="async" />
+          </a>
+          <a class="partner-link" href="https://catar360.es/" target="_blank" rel="noopener noreferrer">
+            <img id="partner-catar" class="partner-logo" src="figures/cataFondoBlanco.png" alt="CATAR · Immersive Wine Experiences" decoding="async" />
+          </a>
+          <a class="partner-link" href="https://www.sherry.wine/es" target="_blank" rel="noopener noreferrer">
+            <img id="partner-consejo" class="partner-logo" src="figures/consejoRegulador.jpg" alt="Consejo Regulador Jerez-Xérès-Sherry" decoding="async" />
+          </a>
+        </div>
+        <div id="landing-intro-backdrop" class="landing-intro-backdrop" hidden></div>
+        <div class="landing-stack-text">
+          <div class="landing-layout">
+            <section
+              id="landing-intro-panel"
+              class="landing-panel landing-panel--intro glass-card"
+              aria-labelledby="landing-intro-heading"
+            >
+              <button type="button" id="landing-intro-close" class="landing-intro-close" aria-label="Cerrar información">×</button>
+              <h1 id="landing-intro-heading" class="sr-only">Oderismo — Catálogo de etiquetas de vino</h1>
+              <p class="subtitle font-serifDisplay">Un archivo vivo de etiquetas con historia</p>
+              <p class="lead">
+                Oderismo es una galería digital para conservar y explorar etiquetas.
+                Nace del nombre del coleccionista Francisco <strong>Odero</strong> Álvarez y del “-ismo” de las colecciones: una forma de mirar el vino a través de su huella gráfica, como memoria de bodegas, marcas y épocas.
+              </p>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <header id="landing-header" class="landing-header">
+        <div class="landing-header-inner">
+          <a href="#" class="landing-header-brand" id="landing-header-brand" aria-label="Oderismo — Inicio">
+            <img
+              id="landing-header-logo"
+              class="landing-header-logo"
+              data-brand-logo="auto"
+              src="figures/logohorizontal.png"
+              alt=""
+              width="200"
+              height="48"
+              decoding="async"
+            />
+          </a>
+          <nav class="landing-header-menu" aria-label="Navegación de portada">
+            <button type="button" id="landing-header-screensaver" class="landing-header-link">
+              Salvapantallas
+            </button>
+            <span class="landing-header-dot" aria-hidden="true">·</span>
+            <button type="button" id="landing-header-collections" class="landing-header-link">
+              Colecciones
+            </button>
+          </nav>
+          <div class="landing-header-actions">
+            <button type="button" id="landing-header-enter" class="landing-header-cta">
+              Acceder <span class="landing-header-cta-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <section class="shell-content">
+        <section id="screensaver" class="screensaver is-hidden" aria-hidden="true" inert>
+          <header class="screensaver-header">
+            <a href="#" id="screensaver-home" class="screensaver-logo-link" aria-label="Oderismo — Volver al inicio">
+              <img
+                id="screensaver-logo"
+                class="screensaver-logo"
+                data-brand-logo="white"
+                src="figures/oderismoblanco.png"
+                alt="Oderismo — Catálogo de etiquetas de vino"
+                width="130"
+                height="31"
+                decoding="async"
+              />
+            </a>
+            <button type="button" id="screensaver-back" class="screensaver-back">Volver</button>
+          </header>
+          <div id="screensaver-stage" class="screensaver-stage" aria-live="polite"></div>
+          <footer class="screensaver-partners" aria-label="Enlaces de entidades colaboradoras">
+            <a class="partner-link" href="https://thesherrygallery.com/" target="_blank" rel="noopener noreferrer">
+              <img class="partner-logo" src="figures/sherryGallery.png" alt="The Sherry Gallery" decoding="async" />
+            </a>
+            <a class="partner-link" href="https://ucatedravino.com/" target="_blank" rel="noopener noreferrer">
+              <img class="partner-logo" src="figures/catedraFondoBlanco.png" alt="Cátedra Vino, Sociedad y Sostenibilidad" decoding="async" />
+            </a>
+            <a class="partner-link" href="https://catar360.es/" target="_blank" rel="noopener noreferrer">
+              <img class="partner-logo" src="figures/cataFondoBlanco.png" alt="CATAR · Immersive Wine Experiences" decoding="async" />
+            </a>
+            <a class="partner-link" href="https://www.sherry.wine/es" target="_blank" rel="noopener noreferrer">
+              <img class="partner-logo" src="figures/consejoRegulador.jpg" alt="Consejo Regulador Jerez-Xérès-Sherry" decoding="async" />
+            </a>
+          </footer>
+        </section>
+
+        <div id="app" class="is-hidden"></div>
+      </section>
+    </main>
+
+    <!-- Modal de acceso -->
+    <div id="login-modal" class="is-hidden" inert aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
+      <div id="login-modal-backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+      <div class="relative min-h-screen flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-md">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h2 id="login-modal-title" class="title title-sm font-serifDisplay">Acceso al sistema</h2>
+              <p id="login-modal-subtitle" class="subtitle subtitle-sm font-serifDisplay">Email y contraseña de Oderismo (no hace falta pegar ningún token)</p>
+            </div>
+            <button id="login-modal-close" type="button" class="btn btn-secondary" aria-label="Cerrar">
+              Cerrar
+            </button>
+          </div>
+
+          <div id="login-panel" class="mt-4">
+            <form id="login-modal-form" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-brand-800 mb-1" for="login-modal-email">Email</label>
+                <input id="login-modal-email" type="email" required autocomplete="username"
+                  class="w-full px-3 py-2 border border-brand-200 rounded-lg bg-white/80 text-brand-900 focus:ring-4 focus:ring-brand-200 outline-none">
+              </div>
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-1">
+                  <label class="block text-sm font-medium text-brand-800" for="login-modal-password">Contraseña</label>
+                  <button type="button" id="login-show-forgot" class="text-sm text-brand-600 hover:text-brand-800 underline">
+                    ¿La has olvidado?
+                  </button>
+                </div>
+                <input id="login-modal-password" type="password" required autocomplete="current-password"
+                  class="w-full px-3 py-2 border border-brand-200 rounded-lg bg-white/80 text-brand-900 focus:ring-4 focus:ring-brand-200 outline-none">
+              </div>
+              <p id="login-modal-hint" class="text-brand-700 text-sm is-hidden"></p>
+              <p id="login-modal-error" class="text-red-500 text-sm is-hidden"></p>
+              <button id="login-modal-submit" type="submit" class="w-full btn btn-primary">
+                Iniciar sesión
+              </button>
+              <button type="button" id="login-show-researcher-request" class="w-full btn btn-secondary">
+                Solicitar alta como Investigador
+              </button>
+            </form>
+          </div>
+
+          <div id="forgot-panel" class="mt-4 is-hidden">
+            <form id="forgot-modal-form" class="space-y-4">
+              <p class="text-sm text-brand-800">
+                Indica tu email. Si la cuenta está activa, te enviaremos un enlace para
+                <strong>establecer o restablecer</strong> la contraseña (válido 1 hora).
+              </p>
+              <div>
+                <label class="block text-sm font-medium text-brand-800 mb-1" for="forgot-modal-email">Email</label>
+                <input id="forgot-modal-email" type="email" required autocomplete="email"
+                  class="w-full px-3 py-2 border border-brand-200 rounded-lg bg-white/80 text-brand-900 focus:ring-4 focus:ring-brand-200 outline-none">
+              </div>
+              <p id="forgot-modal-success" class="text-green-700 text-sm is-hidden"></p>
+              <p id="forgot-modal-dev-link-wrap" class="is-hidden">
+                <span class="text-xs text-brand-700 block mb-1">Enlace de desarrollo (copiar y abrir):</span>
+                <a id="forgot-modal-dev-link" href="#" class="text-sm text-brand-600 break-all underline" target="_blank" rel="noopener"></a>
+              </p>
+              <p id="forgot-modal-error" class="text-red-500 text-sm is-hidden"></p>
+              <button id="forgot-modal-submit" type="submit" class="w-full btn btn-primary">
+                Enviar enlace
+              </button>
+              <button type="button" id="forgot-back-login" class="w-full btn btn-secondary">
+                Volver al acceso
+              </button>
+            </form>
+          </div>
+
+          <div id="researcher-request-panel" class="mt-4 is-hidden">
+            <form id="researcher-request-form" class="space-y-4">
+              <p class="text-sm text-brand-800">
+                Rellena tus datos y la motivación para solicitar el perfil
+                <strong>Investigador</strong>. Un administrador revisará la solicitud.
+              </p>
+              <div>
+                <label class="block text-sm font-medium text-brand-800 mb-1" for="researcher-request-email">Email</label>
+                <input id="researcher-request-email" type="email" required autocomplete="email"
+                  class="w-full px-3 py-2 border border-brand-200 rounded-lg bg-white/80 text-brand-900 focus:ring-4 focus:ring-brand-200 outline-none">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-brand-800 mb-1" for="researcher-request-name">Nombre y apellidos</label>
+                <input id="researcher-request-name" type="text" required autocomplete="name"
+                  class="w-full px-3 py-2 border border-brand-200 rounded-lg bg-white/80 text-brand-900 focus:ring-4 focus:ring-brand-200 outline-none">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-brand-800 mb-1" for="researcher-request-description">Motivación</label>
+                <textarea id="researcher-request-description" required rows="4"
+                  class="w-full px-3 py-2 border border-brand-200 rounded-lg bg-white/80 text-brand-900 focus:ring-4 focus:ring-brand-200 outline-none"></textarea>
+              </div>
+              <p id="researcher-request-success" class="text-green-700 text-sm is-hidden"></p>
+              <p id="researcher-request-error" class="text-red-500 text-sm is-hidden"></p>
+              <button id="researcher-request-submit" type="submit" class="w-full btn btn-primary">
+                Enviar solicitud
+              </button>
+              <button type="button" id="researcher-request-back-login" class="w-full btn btn-secondary">
+                Volver al acceso
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clases dark:* usadas en JS (Tailwind CDN no las detecta en módulos) -->
+    <div class="hidden" aria-hidden="true">
+      <span class="dark:bg-gray-50 dark:bg-gray-700 dark:bg-gray-800 dark:bg-gray-900 dark:bg-green-900 dark:bg-yellow-900 dark:text-white dark:text-gray-200 dark:text-gray-300 dark:text-gray-400 dark:text-gray-500 dark:text-red-400 dark:text-green-300 dark:text-green-400 dark:text-yellow-200 dark:text-yellow-400 dark:text-yellow-600 dark:text-yellow-800 dark:border-gray-600 dark:border-gray-700 dark:hover:bg-gray-600 dark:hover:text-gray-300 dark:hover:border-blue-400"></span>
+    </div>
+
+    <script>
+      // Assets versionados para evitar caché.
+      const v = window.ASSET_VERSION;
+      const setImg = (id, path) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.src = new URL(`${path}?v=${v}`, document.baseURI).href;
+      };
+      setImg('landing-odero-img', 'figures/oderoFondoTransparente.png');
+      setImg('partner-sherry', 'figures/sherryGallery.png');
+      setImg('partner-catedra', 'figures/catedraFondoBlanco.png');
+      setImg('partner-catar', 'figures/cataFondoBlanco.png');
+      setImg('partner-consejo', 'figures/consejoRegulador.jpg');
+      setImg('screensaver-logo', 'figures/oderismoblanco.png');
+    </script>
+
+    <script>
+      // Arranque en la misma página (sin navegar a otra).
+      window.ODERISMO_AUTO_INIT = false;
+
+      const landing = document.getElementById('landing');
+      const appRoot = document.getElementById('app');
+      const screensaverEl = document.getElementById('screensaver');
+      const screensaverStage = document.getElementById('screensaver-stage');
+      const screensaverBack = document.getElementById('screensaver-back');
+      const screensaverHome = document.getElementById('screensaver-home');
+      const landingHeaderBrand = document.getElementById('landing-header-brand');
+      const landingHeaderEnter = document.getElementById('landing-header-enter');
+      const landingHeaderCollections = document.getElementById('landing-header-collections');
+      const landingHeaderScreensaver = document.getElementById('landing-header-screensaver');
+      let screensaverApi = null;
+      let landingFrameMod = null;
+
+      async function startLandingFrame() {
+        const stage = document.getElementById('landing-frame-stage');
+        if (!landing || landing.classList.contains('is-hidden') || !stage) return;
+        try {
+          const v = window.ASSET_VERSION;
+          await loadScript(`js/config.js?v=${v}`);
+          if (!landingFrameMod) {
+            landingFrameMod = await import(`./js/landing-frame.js?v=${v}`);
+          }
+          landingFrameMod.startLandingFrame({ stageEl: stage });
+        } catch (e) {
+          console.warn('Cuadro de etiquetas:', e);
+        }
+      }
+
+      function stopLandingFrame() {
+        landingFrameMod?.stopLandingFrame?.();
+      }
+
+      window.ODERISMO_ON_RETURN_HOME = startLandingFrame;
+      const pageShell = document.querySelector('.page-shell');
+      const landingIntroOpen = document.getElementById('landing-intro-open');
+      const landingIntroBackdrop = document.getElementById('landing-intro-backdrop');
+      const landingIntroPanel = document.getElementById('landing-intro-panel');
+      const landingIntroClose = document.getElementById('landing-intro-close');
+
+      function setLandingIntroOpen(open) {
+        pageShell?.classList.toggle('page-shell--landing-intro-open', open);
+        landingIntroOpen?.setAttribute('aria-expanded', open ? 'true' : 'false');
+        landingIntroPanel?.setAttribute('aria-hidden', open ? 'false' : 'true');
+        if (landingIntroBackdrop) landingIntroBackdrop.hidden = !open;
+      }
+
+      landingIntroOpen?.addEventListener('click', () => {
+        setLandingIntroOpen(!pageShell?.classList.contains('page-shell--landing-intro-open'));
+      });
+      landingIntroBackdrop?.addEventListener('click', () => setLandingIntroOpen(false));
+      landingIntroClose?.addEventListener('click', () => setLandingIntroOpen(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && pageShell?.classList.contains('page-shell--landing-intro-open')) {
+          setLandingIntroOpen(false);
+        }
+      });
+      window.matchMedia('(max-width: 767px)').addEventListener('change', () => {
+        setLandingIntroOpen(false);
+      });
+      landingIntroPanel?.setAttribute('aria-hidden', 'true');
+
+      const loginModal = document.getElementById('login-modal');
+      const loginModalBackdrop = document.getElementById('login-modal-backdrop');
+      const loginModalClose = document.getElementById('login-modal-close');
+      const loginModalTitle = document.getElementById('login-modal-title');
+      const loginModalSubtitle = document.getElementById('login-modal-subtitle');
+      const loginPanel = document.getElementById('login-panel');
+      const forgotPanel = document.getElementById('forgot-panel');
+      const researcherRequestPanel = document.getElementById('researcher-request-panel');
+      const loginModalForm = document.getElementById('login-modal-form');
+      const loginModalEmail = document.getElementById('login-modal-email');
+      const loginModalPassword = document.getElementById('login-modal-password');
+      const loginModalHint = document.getElementById('login-modal-hint');
+      const loginModalError = document.getElementById('login-modal-error');
+      const loginModalSubmit = document.getElementById('login-modal-submit');
+      const loginShowForgot = document.getElementById('login-show-forgot');
+      const loginShowResearcherRequest = document.getElementById('login-show-researcher-request');
+      const forgotModalForm = document.getElementById('forgot-modal-form');
+      const forgotModalEmail = document.getElementById('forgot-modal-email');
+      const forgotModalSuccess = document.getElementById('forgot-modal-success');
+      const forgotModalDevLinkWrap = document.getElementById('forgot-modal-dev-link-wrap');
+      const forgotModalDevLink = document.getElementById('forgot-modal-dev-link');
+      const forgotModalError = document.getElementById('forgot-modal-error');
+      const forgotModalSubmit = document.getElementById('forgot-modal-submit');
+      const forgotBackLogin = document.getElementById('forgot-back-login');
+      const researcherRequestForm = document.getElementById('researcher-request-form');
+      const researcherRequestEmail = document.getElementById('researcher-request-email');
+      const researcherRequestName = document.getElementById('researcher-request-name');
+      const researcherRequestDescription = document.getElementById('researcher-request-description');
+      const researcherRequestSuccess = document.getElementById('researcher-request-success');
+      const researcherRequestError = document.getElementById('researcher-request-error');
+      const researcherRequestSubmit = document.getElementById('researcher-request-submit');
+      const researcherRequestBackLogin = document.getElementById('researcher-request-back-login');
+
+      // Recuperación: si la app quedó vacía tras un error, mostrar landing otra vez.
+      if (landing && appRoot?.classList.contains('is-hidden') === false && !appRoot.innerHTML.trim()) {
+        appRoot.classList.add('is-hidden');
+        landing.classList.remove('is-hidden');
+        pageShell?.classList.remove('page-shell--app');
+      }
+
+      function loadScript(src) {
+        return new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = src;
+          s.onload = () => resolve();
+          s.onerror = () => reject(new Error('No se pudo cargar ' + src));
+          document.body.appendChild(s);
+        });
+      }
+
+      function showLoginPanel() {
+        loginPanel?.classList.remove('is-hidden');
+        forgotPanel?.classList.add('is-hidden');
+        researcherRequestPanel?.classList.add('is-hidden');
+        if (loginModalTitle) loginModalTitle.textContent = 'Acceso al sistema';
+        if (loginModalSubtitle) loginModalSubtitle.textContent = 'Introduce tus credenciales';
+        if (forgotModalSuccess) forgotModalSuccess.classList.add('is-hidden');
+        if (forgotModalDevLinkWrap) forgotModalDevLinkWrap.classList.add('is-hidden');
+        if (forgotModalError) forgotModalError.classList.add('is-hidden');
+        if (forgotModalSubmit) forgotModalSubmit.disabled = false;
+        if (researcherRequestSuccess) researcherRequestSuccess.classList.add('is-hidden');
+        if (researcherRequestError) researcherRequestError.classList.add('is-hidden');
+        if (researcherRequestSubmit) researcherRequestSubmit.disabled = false;
+      }
+
+      function showForgotPanel(prefillEmail) {
+        loginPanel?.classList.add('is-hidden');
+        forgotPanel?.classList.remove('is-hidden');
+        researcherRequestPanel?.classList.add('is-hidden');
+        if (loginModalTitle) loginModalTitle.textContent = 'Recuperar contraseña';
+        if (loginModalSubtitle) loginModalSubtitle.textContent = 'Te enviaremos un enlace seguro';
+        if (prefillEmail && forgotModalEmail) forgotModalEmail.value = prefillEmail;
+        forgotModalEmail?.focus();
+      }
+
+      function showResearcherRequestPanel(prefillEmail) {
+        loginPanel?.classList.add('is-hidden');
+        forgotPanel?.classList.add('is-hidden');
+        researcherRequestPanel?.classList.remove('is-hidden');
+        if (loginModalTitle) loginModalTitle.textContent = 'Solicitud de investigador';
+        if (loginModalSubtitle) loginModalSubtitle.textContent = 'Alta pendiente de revisión';
+        if (prefillEmail && researcherRequestEmail) researcherRequestEmail.value = prefillEmail;
+        researcherRequestForm?.querySelectorAll('input, textarea').forEach((el) => { el.disabled = false; });
+        if (researcherRequestSubmit) researcherRequestSubmit.disabled = false;
+        if (researcherRequestSuccess) researcherRequestSuccess.classList.add('is-hidden');
+        if (researcherRequestError) researcherRequestError.classList.add('is-hidden');
+        researcherRequestEmail?.focus();
+      }
+
+      function openLoginModal() {
+        if (!loginModal) return;
+        showLoginPanel();
+        loginModal.classList.remove('is-hidden');
+        loginModal.removeAttribute('inert');
+        loginModal.removeAttribute('aria-hidden');
+        loginModalEmail?.focus();
+      }
+
+      function closeLoginModal() {
+        if (!loginModal) return;
+        loginModal.classList.add('is-hidden');
+        loginModal.setAttribute('inert', '');
+        loginModal.setAttribute('aria-hidden', 'true');
+        showLoginPanel();
+        if (loginModalError) loginModalError.classList.add('is-hidden');
+        if (loginModalHint) loginModalHint.classList.add('is-hidden');
+        if (loginModalSubmit) loginModalSubmit.disabled = false;
+      }
+      window.ODERISMO_CLOSE_LOGIN = closeLoginModal;
+
+      async function startApp() {
+        if (!landing || !appRoot) return;
+
+        const v = window.ASSET_VERSION;
+        try {
+          await loadScript(`js/config.js?v=${v}`);
+          const { api, hasSession } = await import(`./js/api.js?v=${v}`);
+          if (hasSession()) {
+            const user = await api.validateSession();
+            if (!user) {
+              openLoginModal();
+              if (loginModalHint) {
+                loginModalHint.textContent =
+                  'La sesión guardada ya no es válida. Vuelve a iniciar sesión con email y contraseña.';
+                loginModalHint.classList.remove('is-hidden');
+              }
+              return;
+            }
+          }
+          window.ODERISMO_OPEN_LOGIN = openLoginModal;
+          stopLandingFrame();
+          const mod = await import(`./js/app.js?v=${v}`);
+          landing.classList.add('is-hidden');
+          appRoot.classList.remove('is-hidden');
+          appRoot.classList.add('shell-content');
+          pageShell?.classList.add('page-shell--app');
+          await mod.initApp({ onRequestLogin: openLoginModal });
+        } catch (err) {
+          console.error('Error arrancando la app:', err);
+          landing.classList.remove('is-hidden');
+          appRoot.classList.add('is-hidden');
+          appRoot.classList.remove('shell-content');
+          pageShell?.classList.remove('page-shell--app');
+          const { toastError } = await import(`./js/toast.js?v=${v}`);
+          toastError('No se pudo cargar la aplicación. Comprueba la conexión y recarga la página.');
+        }
+      }
+
+      loginModalBackdrop?.addEventListener('click', closeLoginModal);
+      loginModalClose?.addEventListener('click', closeLoginModal);
+      loginShowForgot?.addEventListener('click', () => {
+        showForgotPanel(loginModalEmail?.value?.trim() || '');
+      });
+      loginShowResearcherRequest?.addEventListener('click', () => {
+        showResearcherRequestPanel(loginModalEmail?.value?.trim() || '');
+      });
+      forgotBackLogin?.addEventListener('click', showLoginPanel);
+      researcherRequestBackLogin?.addEventListener('click', showLoginPanel);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (screensaverEl && !screensaverEl.classList.contains('is-hidden')) {
+            closeScreensaver();
+            return;
+          }
+          closeLoginModal();
+        }
+      });
+
+      researcherRequestForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!researcherRequestEmail || !researcherRequestName || !researcherRequestDescription) return;
+        if (researcherRequestError) researcherRequestError.classList.add('is-hidden');
+        if (researcherRequestSuccess) researcherRequestSuccess.classList.add('is-hidden');
+        if (researcherRequestSubmit) researcherRequestSubmit.disabled = true;
+
+        try {
+          const v = window.ASSET_VERSION;
+          await loadScript(`js/config.js?v=${v}`);
+          const { api } = await import(`./js/api.js?v=${v}`);
+          const data = await api.requestResearcherAccess({
+            email: researcherRequestEmail.value,
+            fullName: researcherRequestName.value,
+            description: researcherRequestDescription.value,
+          });
+          if (researcherRequestSuccess) {
+            researcherRequestSuccess.textContent = data.message || 'Solicitud enviada correctamente.';
+            researcherRequestSuccess.classList.remove('is-hidden');
+          }
+          researcherRequestForm.querySelectorAll('input, textarea').forEach((el) => { el.disabled = true; });
+        } catch (err) {
+          if (researcherRequestError) {
+            researcherRequestError.textContent = err?.message || 'No se pudo enviar la solicitud';
+            researcherRequestError.classList.remove('is-hidden');
+          }
+          if (researcherRequestSubmit) researcherRequestSubmit.disabled = false;
+        }
+      });
+
+      forgotModalForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!forgotModalEmail) return;
+        if (forgotModalError) forgotModalError.classList.add('is-hidden');
+        if (forgotModalSuccess) forgotModalSuccess.classList.add('is-hidden');
+        if (forgotModalDevLinkWrap) forgotModalDevLinkWrap.classList.add('is-hidden');
+        if (forgotModalSubmit) forgotModalSubmit.disabled = true;
+
+        const email = forgotModalEmail.value.trim();
+        try {
+          const v = window.ASSET_VERSION;
+          await loadScript(`js/config.js?v=${v}`);
+          const { api } = await import(`./js/api.js?v=${v}`);
+          const data = await api.requestPasswordReset(email);
+          if (forgotModalSuccess) {
+            forgotModalSuccess.textContent = data.message || 'Revisa tu correo si la cuenta existe.';
+            forgotModalSuccess.classList.remove('is-hidden');
+          }
+          if (data.reset_url && forgotModalDevLink && forgotModalDevLinkWrap) {
+            forgotModalDevLink.href = data.reset_url;
+            forgotModalDevLink.textContent = data.reset_url;
+            forgotModalDevLinkWrap.classList.remove('is-hidden');
+          }
+        } catch (err) {
+          if (forgotModalError) {
+            forgotModalError.textContent = err?.message || 'No se pudo enviar la solicitud';
+            forgotModalError.classList.remove('is-hidden');
+          }
+          if (forgotModalSubmit) forgotModalSubmit.disabled = false;
+        }
+      });
+
+      loginModalForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!loginModalEmail || !loginModalPassword) return;
+        if (loginModalError) loginModalError.classList.add('is-hidden');
+        if (loginModalHint) loginModalHint.classList.add('is-hidden');
+        if (loginModalSubmit) loginModalSubmit.disabled = true;
+
+        const email = loginModalEmail.value;
+        const password = loginModalPassword.value;
+
+        try {
+          const v = window.ASSET_VERSION;
+          // Necesario para que api.js lea window.API_URL correctamente.
+          await loadScript(`js/config.js?v=${v}`);
+          const { api } = await import(`./js/api.js?v=${v}`);
+          await api.login(email, password);
+          await api.validateSession();
+          closeLoginModal();
+          window.ODERISMO_OPEN_LOGIN = openLoginModal;
+          stopLandingFrame();
+          const mod = await import(`./js/app.js?v=${v}`);
+          if (landing && appRoot) {
+            landing.classList.add('is-hidden');
+            appRoot.classList.remove('is-hidden');
+            appRoot.classList.add('shell-content');
+            pageShell?.classList.add('page-shell--app');
+          }
+          await mod.initApp({ onRequestLogin: openLoginModal });
+        } catch (err) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          const needsSetup =
+            err?.code === 'PASSWORD_SETUP_REQUIRED' || /establecer una contraseña/i.test(err?.message || '');
+          if (needsSetup) {
+            if (loginModalError) loginModalError.classList.add('is-hidden');
+            if (loginModalHint) {
+              loginModalHint.textContent =
+                'Primera vez o contraseña antigua: pulsa «¿La has olvidado?», envía el enlace y ábrelo para crear tu contraseña nueva.';
+              loginModalHint.classList.remove('is-hidden');
+            }
+            showForgotPanel(email.trim());
+          } else {
+            if (loginModalHint) loginModalHint.classList.add('is-hidden');
+            const msg = err?.message || 'Error en el acceso';
+            if (loginModalError) {
+              loginModalError.textContent = msg;
+              loginModalError.classList.remove('is-hidden');
+            }
+          }
+          if (loginModalSubmit) loginModalSubmit.disabled = false;
+        }
+      });
+
+      async function openCollections() {
+        if (!landing || !appRoot) return;
+
+        const v = window.ASSET_VERSION;
+        try {
+          await loadScript(`js/config.js?v=${v}`);
+          const { api, hasSession, clearSession } = await import(`./js/api.js?v=${v}`);
+          if (hasSession()) {
+            try {
+              await api.validateSession();
+            } catch {
+              clearSession();
+            }
+          }
+          window.ODERISMO_OPEN_LOGIN = openLoginModal;
+          setLandingIntroOpen(false);
+          stopLandingFrame();
+          const mod = await import(`./js/app.js?v=${v}`);
+          landing.classList.add('is-hidden');
+          appRoot.classList.remove('is-hidden');
+          appRoot.classList.add('shell-content');
+          pageShell?.classList.add('page-shell--app');
+          await mod.initApp({ initialView: 'catalogs', onRequestLogin: openLoginModal });
+        } catch (err) {
+          console.error('Error abriendo colecciones:', err);
+          landing.classList.remove('is-hidden');
+          appRoot.classList.add('is-hidden');
+          appRoot.classList.remove('shell-content');
+          pageShell?.classList.remove('page-shell--app');
+          startLandingFrame();
+          const { toastError } = await import(`./js/toast.js?v=${v}`);
+          toastError('No se pudieron cargar las colecciones. Comprueba la conexión y recarga la página.');
+        }
+      }
+
+      async function openScreensaver() {
+        if (!landing || !screensaverEl || !screensaverStage) return;
+
+        const v = window.ASSET_VERSION;
+        try {
+          setLandingIntroOpen(false);
+          stopLandingFrame();
+          await loadScript(`js/config.js?v=${v}`);
+          if (!screensaverApi) {
+            screensaverApi = await import(`./js/screensaver.js?v=${v}`);
+          }
+          landing.classList.add('is-hidden');
+          screensaverEl.classList.remove('is-hidden');
+          screensaverEl.removeAttribute('inert');
+          screensaverEl.removeAttribute('aria-hidden');
+          pageShell?.classList.add('page-shell--screensaver');
+          window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+          await screensaverApi.startScreensaver({
+            stageEl: screensaverStage,
+            onError: (err) => console.warn('Salvapantallas:', err?.message || err),
+          });
+        } catch (err) {
+          console.error('Error abriendo salvapantallas:', err);
+          closeScreensaver();
+          const { toastError } = await import(`./js/toast.js?v=${v}`);
+          toastError('No se pudo abrir el salvapantallas. Comprueba la conexión y recarga la página.');
+        }
+      }
+
+      function closeScreensaver() {
+        screensaverApi?.stopScreensaver?.();
+        if (screensaverStage) screensaverStage.innerHTML = '';
+        screensaverEl?.classList.add('is-hidden');
+        screensaverEl?.setAttribute('inert', '');
+        screensaverEl?.setAttribute('aria-hidden', 'true');
+        landing?.classList.remove('is-hidden');
+        pageShell?.classList.remove('page-shell--screensaver');
+        startLandingFrame();
+      }
+
+      landingHeaderScreensaver?.addEventListener('click', openScreensaver);
+      screensaverBack?.addEventListener('click', closeScreensaver);
+      screensaverHome?.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeScreensaver();
+      });
+
+      landingHeaderBrand?.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      landingHeaderEnter?.addEventListener('click', openLoginModal);
+      landingHeaderCollections?.addEventListener('click', openCollections);
+
+      (async function initLandingChrome() {
+        try {
+          const v = window.ASSET_VERSION;
+          const theme = await import(`./js/theme.js?v=${v}`);
+          const brand = await import(`./js/brand-logo.js?v=${v}`);
+          theme.initTheme();
+          brand.syncBrandLogos();
+          await loadScript(`js/config.js?v=${v}`);
+          startLandingFrame();
+        } catch (e) {
+          console.warn('No se pudo inicializar el tema en la portada:', e);
+        }
+      })();
+
+      // Si ya hay sesión guardada, entrar a la app sin volver a pedir login.
+      (async function autoResumeSession() {
+        try {
+          const v = window.ASSET_VERSION;
+          await loadScript(`js/config.js?v=${v}`);
+          const { hasSession } = await import(`./js/api.js?v=${v}`);
+          if (hasSession()) await startApp();
+        } catch (e) {
+          console.warn('No se pudo reanudar la sesión:', e);
+        }
+      })();
+    </script>
+  </body>
+</html>

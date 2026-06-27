@@ -1,0 +1,24 @@
+{
+  "per_query": {
+    "q01": {
+      "solo_ocr_vs_solo_vlm": 0.1765,
+      "solo_ocr_vs_ocr_vlm": 0.4286,
+      "solo_vlm_vs_ocr_vlm": 0.4286
+    },
+    "q02": {
+      "solo_ocr_vs_solo_vlm": 0.1765,
+      "solo_ocr_vs_ocr_vlm": 0.25,
+      "solo_vlm_vs_ocr_vlm": 0.8182
+    },
+    "q03": {
+      "solo_ocr_vs_solo_vlm": 0.1111,
+      "solo_ocr_vs_ocr_vlm": 0.0526,
+      "solo_vlm_vs_ocr_vlm": 0.6667
+    }
+  },
+  "mean": {
+    "solo_ocr_vs_solo_vlm": 0.1547,
+    "solo_ocr_vs_ocr_vlm": 0.2437,
+    "solo_vlm_vs_ocr_vlm": 0.6378
+  }
+}

@@ -1,0 +1,90 @@
+services:
+
+  app:
+    build: .
+    container_name: backend-api
+    ports:
+      - "10000:8000"
+    environment:
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - OLLAMA_HOST=http://ollama:11434
+      - REMBG_URL=http://rembg-service:8001
+      - OCR_MODEL=glm-ocr:bf16
+      - VISION_MODEL=gemma4:26b
+      - TEXT_EMBED_MODEL=bge-m3:latest
+      - IMAGE_DEST=/app/images/processed
+      - THUMB_DEST=/app/images/thumbnails
+      - DEBUG_DIR=/app/debug
+    env_file:
+      - .env
+    volumes:
+      - ./src/Sistema-de-catalogacion-de-imagenes:/app/src
+      - ${IMAGE_DEST_HOST:-./runtime/processed}:/app/images/processed
+      - ${THUMB_DEST_HOST:-./runtime/thumbnails}:/app/images/thumbnails
+      - ${DEBUG_DIR_HOST:-./runtime/debug}:/app/debug
+    networks:
+      - red-proyecto
+    restart: unless-stopped
+
+  rembg-service:
+    build: ./rembg-service
+    container_name: rembg-service
+    ports:
+      - "8001:8001"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - red-proyecto
+    restart: unless-stopped
+
+  # ollama:
+  #   image: ollama-patched:0.24.0
+  #   container_name: ollama
+  #   restart: always
+  #   shm_size: "8gb"
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ollama_storage:/root/.ollama
+  #     - ollama_cache:/root/.cache
+  #   environment:
+  #     - NVIDIA_VISIBLE_DEVICES=all
+  #     - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+  #     - OLLAMA_NUM_GPU=999
+  #     - OLLAMA_LOAD_IN_MEMORY=0
+  #     - OLLAMA_CONTEXT_LENGTH=4096
+  #     - OLLAMA_FLASH_ATTENTION=1
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [ gpu ]
+  #   networks:
+  #     - contabilidad-network
+
+
+  # qdrant:
+  #   image: qdrant/qdrant:latest
+  #   container_name: qdrant
+  #   restart: always
+  #   ports:
+  #     - "6333:6333"
+  #   volumes:
+  #     - qdrant_storage:/qdrant/storage
+  #   networks:
+  #     - contabilidad-network
+
+networks:
+  red-proyecto:
+    driver: bridge
+
+volumes:
+  hf_cache:

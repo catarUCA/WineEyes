@@ -108,6 +108,10 @@ reported results. The complete source collection is not redistributed. Cached
 OCR/VLM text, qrels, rankings, and metrics are provided
 to make the reported evaluation independently inspectable.
 
+## Live Demo
+
+A live deployment of the web client (located in the `frontend/` directory) is available at: **[etiquetaspacoodero.com](https://etiquetaspacoodero.com)**
+
 ## Citation and support
 
 The SoftwareX citation will be added after publication. For technical

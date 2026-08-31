@@ -1,4 +1,4 @@
-# WineEyes
+# WineEyes v1.1
 
 WineEyes is an open-source pipeline for cataloguing and retrieving heritage
 wine labels with natural-language queries. It combines image rectification,

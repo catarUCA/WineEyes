@@ -47,7 +47,7 @@
 
     <script>
       // Cache-busting simple: incrementa este valor en cada despliegue.
-      window.ASSET_VERSION = '2026-06-24.7';
+      window.ASSET_VERSION = '2026-07-17b';
       document.getElementById('app-style').href = `css/style.css?v=${window.ASSET_VERSION}`;
     </script>
   </head>
@@ -605,24 +605,24 @@
         }
       });
 
-      loginModalForm?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (!loginModalEmail || !loginModalPassword) return;
-        if (loginModalError) loginModalError.classList.add('is-hidden');
-        if (loginModalHint) loginModalHint.classList.add('is-hidden');
-        if (loginModalSubmit) loginModalSubmit.disabled = true;
+  loginModalForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!loginModalEmail || !loginModalPassword) return;
+    if (loginModalError) loginModalError.classList.add('is-hidden');
+    if (loginModalHint) loginModalHint.classList.add('is-hidden');
+    if (loginModalSubmit) loginModalSubmit.disabled = true;
 
-        const email = loginModalEmail.value;
-        const password = loginModalPassword.value;
+    const email = loginModalEmail.value;
+    const password = loginModalPassword.value;
 
-        try {
-          const v = window.ASSET_VERSION;
-          // Necesario para que api.js lea window.API_URL correctamente.
-          await loadScript(`js/config.js?v=${v}`);
-          const { api } = await import(`./js/api.js?v=${v}`);
-          await api.login(email, password);
-          await api.validateSession();
-          closeLoginModal();
+    try {
+      const v = window.ASSET_VERSION;
+      // Necesario para que api.js lea window.API_URL correctamente.
+      await loadScript(`js/config.js?v=${v}`);
+      const { api } = await import(`./js/api.js?v=${v}`);
+      await api.login(email, password);
+      await api.validateSession();
+      closeLoginModal();
           window.ODERISMO_OPEN_LOGIN = openLoginModal;
           stopLandingFrame();
           const mod = await import(`./js/app.js?v=${v}`);

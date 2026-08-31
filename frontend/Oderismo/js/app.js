@@ -1,6 +1,6 @@
 import { hasSession, logout, restoreSession, prefetchEtiquetasMediaToken } from './api.js';
-import { startSessionWatchdog, stopSessionWatchdog } from './session-timeout.js';
-import { renderGallery } from './gallery.js';
+import { startSessionWatchdog, stopSessionWatchdog } from './session-timeout.js?v=2026-07-17';
+import { renderGallery } from './gallery.js?v=2026-07-17';
 import { renderAdmin } from './admin.js';
 import { renderPlaceholder } from './placeholder.js';
 import { renderMarcas } from './marcas.js';

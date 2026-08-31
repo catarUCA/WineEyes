@@ -355,22 +355,12 @@ export const api = {
       return getUser();
     }
 
-    const expMs = getSessionExpiresAtMs();
-    if (expMs && Date.now() >= expMs) {
-      clearSession();
-      return null;
-    }
-
     let r;
     try {
       r = await fetch(`${AUTH_API_URL}/auth/me`, {
         headers: getAuthHeaders(),
       });
     } catch {
-      if (expMs && Date.now() >= expMs) {
-        clearSession();
-        return null;
-      }
       return getUser();
     }
 
@@ -471,11 +461,13 @@ export const api = {
     return withResolvedImageUrls(await handleResponse(r));
   },
 
-  async searchImages(query, limit = 20) {
-    const r = await fetch(`${ETIQUETAS_API_URL}/search`, {
+  async searchImages(query, limit = 20, scoreThreshold = 0) {
+    const token = getToken();
+    const qs = token ? `?token=${encodeURIComponent(token)}` : '';
+    const r = await fetch(`${ETIQUETAS_API_URL}/search${qs}`, {
       method: 'POST',
       headers: getAuthHeaders(),
-      body: JSON.stringify({ query: String(query).trim(), limit, score_threshold: 0 }),
+      body: JSON.stringify({ query: String(query).trim(), limit, score_threshold: scoreThreshold }),
     });
     const data = withResolvedImageUrls(await handleResponse(r));
     if (data?.images && limit > 0 && data.images.length > limit) {

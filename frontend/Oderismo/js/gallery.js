@@ -7,7 +7,7 @@ import {
 } from './image-meta-panel.js';
 import { confirmDialog, toastError } from './toast.js';
 
-const LIMIT_OPTIONS = [10, 20, 50, 100];
+const DEFAULT_THRESHOLD = 0.2;
 
 export async function renderGallery(container, options = {}) {
   const guest = options.guest === true || !hasSession();
@@ -29,7 +29,12 @@ export async function renderGallery(container, options = {}) {
   let hasMore = false;
   let images = [];
   let currentQuery = '';
+  let searchThreshold = DEFAULT_THRESHOLD;
   let searchLimit = 20;
+  const PAGE_SIZE = 20;
+  let paginated = false;
+  let searchPage = 0;
+  let collectionTotal = null;
   let lastOpened = null;
   let scale = 1;
   let panX = 0;
@@ -68,12 +73,23 @@ export async function renderGallery(container, options = {}) {
             <span class="explore-search-submit-spinner animate-spin is-hidden" aria-hidden="true"></span>
           </button>
         </div>
-        <div id="limit-row" class="explore-limit-row is-hidden">
+        <div id="threshold-row" class="explore-threshold-row is-hidden">
+          <label class="explore-limit-label" for="threshold-range">Similitud mínima</label>
+          <input type="range" id="threshold-range" class="explore-threshold-range"
+            min="0" max="100" step="5" value="${Math.round(DEFAULT_THRESHOLD * 100)}" />
+          <span id="threshold-value" class="explore-threshold-value">${Math.round(DEFAULT_THRESHOLD * 100)}%</span>
           <span class="explore-limit-label">Mostrar</span>
-          <div id="limit-buttons" class="explore-limit-buttons"></div>
-          <span class="explore-limit-label">resultados</span>
+          <span id="top-buttons" class="explore-top-buttons">
+            <button type="button" class="explore-top-btn" data-limit="0">Todas</button>
+            <button type="button" class="explore-top-btn" data-limit="5">5</button>
+            <button type="button" class="explore-top-btn" data-limit="10">10</button>
+            <button type="button" class="explore-top-btn is-active" data-limit="20">20</button>
+            <button type="button" class="explore-top-btn" data-limit="50">50</button>
+          </span>
         </div>
       </form>
+
+      ${!guest ? '<p id="gallery-count" class="explore-count is-hidden" aria-live="polite"></p>' : ''}
 
       <div id="image-grid" class="explore-grid" role="list"></div>
       <div id="gallery-loading" class="explore-loading is-hidden" aria-hidden="true">
@@ -83,6 +99,7 @@ export async function renderGallery(container, options = {}) {
       <div id="load-more-wrap" class="explore-load-more is-hidden">
         <button type="button" id="load-more-btn" class="app-btn app-btn-primary">Ver más</button>
       </div>
+      <nav id="pager" class="explore-pager is-hidden" aria-label="Paginación de resultados"></nav>
     </div>
 
     <div id="image-modal" class="shot-modal is-hidden" role="dialog" aria-modal="true">
@@ -111,8 +128,11 @@ export async function renderGallery(container, options = {}) {
   const grid = container.querySelector('#image-grid');
   const searchForm = container.querySelector('#search-form');
   const searchInput = container.querySelector('#search-input');
-  const limitRow = container.querySelector('#limit-row');
-  const limitButtons = container.querySelector('#limit-buttons');
+  const thresholdRow = container.querySelector('#threshold-row');
+  const thresholdRange = container.querySelector('#threshold-range');
+  const thresholdValue = container.querySelector('#threshold-value');
+  const topSelect = container.querySelector('#top-select');
+  const topButtons = container.querySelector('#top-buttons');
   const searchSubmit = container.querySelector('#search-submit');
   const searchSubmitIcon = container.querySelector('.explore-search-submit-icon');
   const searchSubmitSpinner = container.querySelector('.explore-search-submit-spinner');
@@ -120,9 +140,11 @@ export async function renderGallery(container, options = {}) {
   const noResults = container.querySelector('#no-results');
   const loadMoreWrap = container.querySelector('#load-more-wrap');
   const loadMoreBtn = container.querySelector('#load-more-btn');
+  const pager = container.querySelector('#pager');
   const modal = container.querySelector('#image-modal');
   const viewer = container.querySelector('#image-viewer');
   const viewerBody = container.querySelector('.shot-modal-body');
+  const countEl = container.querySelector('#gallery-count');
 
   const imageMeta = showImageMeta
     ? bindImageMetaPanel(modal, {
@@ -135,20 +157,27 @@ export async function renderGallery(container, options = {}) {
       })
     : null;
 
-  LIMIT_OPTIONS.forEach((n) => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'explore-limit-btn' + (n === searchLimit ? ' is-active' : '');
-    b.textContent = String(n);
-    b.dataset.limit = String(n);
-    b.addEventListener('click', () => {
-      searchLimit = n;
-      limitButtons.querySelectorAll('.explore-limit-btn').forEach((el) => {
-        el.classList.toggle('is-active', el.dataset.limit === String(n));
-      });
-      if (currentQuery) doSearch(currentQuery);
-    });
-    limitButtons.appendChild(b);
+  function updateThresholdRowVisibility() {
+    if (!thresholdRow) return;
+    const active = Boolean(searchInput?.value.trim());
+    thresholdRow.classList.toggle('is-hidden', !active);
+  }
+
+  thresholdRange?.addEventListener('input', () => {
+    searchThreshold = Number(thresholdRange.value) / 100;
+    if (thresholdValue) thresholdValue.textContent = `${thresholdRange.value}%`;
+  });
+
+  topSelect?.addEventListener('change', () => {
+    searchLimit = parseInt(topSelect.value, 10) || 0;
+  });
+
+  topButtons?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.explore-top-btn');
+    if (!btn) return;
+    searchLimit = parseInt(btn.dataset.limit, 10) || 0;
+    topButtons.querySelectorAll('.explore-top-btn').forEach((b) => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
   });
 
   function autoResizeSearch() {
@@ -159,7 +188,7 @@ export async function renderGallery(container, options = {}) {
 
   searchInput?.addEventListener('input', () => {
     autoResizeSearch();
-    limitRow.classList.toggle('is-hidden', !searchInput.value.trim());
+    updateThresholdRowVisibility();
   });
 
   function setSearchLoading(on) {
@@ -213,7 +242,8 @@ export async function renderGallery(container, options = {}) {
       try {
         await api.deleteImage(parseInt(img.id, 10));
         images = images.filter((i) => i.id !== img.id);
-        card.remove();
+        if (paginated) afterDeleteRefresh();
+        else card.remove();
       } catch (err) {
         toastError(err.message);
       }
@@ -388,6 +418,107 @@ export async function renderGallery(container, options = {}) {
     }
   });
 
+  // ===== Paginación =====
+  function pagerNumbers(cur, pages) {
+    const wanted = [0, pages - 1, cur, cur - 1, cur + 1]
+      .filter((n) => n >= 0 && n < pages);
+    const uniqueSorted = [...new Set(wanted)].sort((a, b) => a - b);
+    const out = [];
+    let prev = -1;
+    for (const n of uniqueSorted) {
+      if (prev >= 0 && n - prev > 1) out.push('…');
+      out.push(n);
+      prev = n;
+    }
+    return out;
+  }
+
+  function renderPager(pages) {
+    if (!pager) return;
+    if (pages <= 1) {
+      pager.classList.add('is-hidden');
+      pager.innerHTML = '';
+      return;
+    }
+    const cur = searchPage;
+    const parts = [
+      `<button type="button" class="explore-pager-btn" data-nav="prev" ${cur === 0 ? 'disabled' : ''} aria-label="Página anterior">‹</button>`,
+    ];
+    for (const n of pagerNumbers(cur, pages)) {
+      parts.push(n === '…'
+        ? '<span class="explore-pager-ellipsis" aria-hidden="true">…</span>'
+        : `<button type="button" class="explore-pager-num${n === cur ? ' is-active' : ''}" data-page="${n}"${n === cur ? ' aria-current="page"' : ''}>${n + 1}</button>`);
+    }
+    parts.push(`<button type="button" class="explore-pager-btn" data-nav="next" ${cur >= pages - 1 ? 'disabled' : ''} aria-label="Página siguiente">›</button>`);
+    pager.innerHTML = parts.join('');
+    pager.classList.remove('is-hidden');
+
+    const goTo = (p) => {
+      const target = Math.max(0, Math.min(pages - 1, p));
+      if (target === searchPage) return;
+      searchPage = target;
+      renderSearchResults();
+      grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    pager.querySelectorAll('[data-page]').forEach((b) => {
+      b.addEventListener('click', () => goTo(parseInt(b.dataset.page, 10)));
+    });
+    pager.querySelector('[data-nav="prev"]')?.addEventListener('click', () => goTo(cur - 1));
+    pager.querySelector('[data-nav="next"]')?.addEventListener('click', () => goTo(cur + 1));
+  }
+
+  function renderSearchResults() {
+    const total = images.length;
+    const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    if (searchPage >= pages) searchPage = pages - 1;
+    if (searchPage < 0) searchPage = 0;
+    const start = searchPage * PAGE_SIZE;
+    renderGrid(images.slice(start, start + PAGE_SIZE));
+    renderPager(pages);
+  }
+
+  function hidePager() {
+    pager?.classList.add('is-hidden');
+    if (pager) pager.innerHTML = '';
+  }
+
+  // ===== Contador =====
+  function updateCountMessage() {
+    if (!countEl) return;
+    let text = '';
+    if (paginated) {
+      const n = images.length;
+      text = n === 1 ? '1 resultado' : `${n} resultados`;
+    } else if (collectionTotal != null) {
+      text = collectionTotal === 1
+        ? '1 imagen en la colección'
+        : `${collectionTotal} imágenes en la colección`;
+    }
+    countEl.textContent = text;
+    countEl.classList.toggle('is-hidden', !text);
+  }
+
+  async function refreshCollectionTotal() {
+    try {
+      const data = await api.getImages(0, 1);
+      collectionTotal = data.total ?? null;
+    } catch {
+      collectionTotal = null;
+    }
+    if (!paginated) updateCountMessage();
+  }
+
+  function afterDeleteRefresh() {
+    if (!paginated) return;
+    renderSearchResults();
+    updateCountMessage();
+    if (!images.length) {
+      noResults.textContent = 'No se encontraron imágenes';
+      noResults.classList.remove('is-hidden');
+    }
+  }
+
+  // ===== Búsqueda =====
   async function doSearch(query) {
     if (!canSearch) return;
     currentQuery = query;
@@ -396,14 +527,26 @@ export async function renderGallery(container, options = {}) {
     loadMoreWrap.classList.add('is-hidden');
     hasMore = false;
     try {
-      const data = await api.searchImages(query, searchLimit);
+      const data = await api.searchImages(query, 0, searchThreshold);
       images = data.images || [];
-      renderGrid(images);
-      if (!images.length) {
-        noResults.textContent = 'No se encontraron imágenes';
+      paginated = true;
+      searchPage = 0;
+      if (searchLimit > 0 && images.length > searchLimit) {
+        images = images.slice(0, searchLimit);
+      }
+      if (images.length) {
+        renderSearchResults();
+      } else {
+        renderGrid([]);
+        hidePager();
+        noResults.textContent = 'No se encontraron imágenes por encima del umbral';
         noResults.classList.remove('is-hidden');
       }
+      updateCountMessage();
     } catch (err) {
+      paginated = false;
+      hidePager();
+      updateCountMessage();
       noResults.textContent = err.message || 'Error en la búsqueda';
       noResults.classList.remove('is-hidden');
       renderGrid([]);
@@ -414,6 +557,8 @@ export async function renderGallery(container, options = {}) {
   async function loadImages(reset = false) {
     if (!canBrowseAll) return;
     if (loading || loadingMore) return;
+    paginated = false;
+    hidePager();
     if (reset) {
       page = 0;
       images = [];
@@ -429,6 +574,8 @@ export async function renderGallery(container, options = {}) {
       renderGrid(images);
       hasMore = data.has_more;
       page++;
+      if (data.total != null) collectionTotal = data.total;
+      updateCountMessage();
       loadMoreWrap.classList.toggle('is-hidden', !hasMore);
       if (!images.length) {
         noResults.textContent = 'No se encontraron imágenes';
@@ -452,6 +599,7 @@ export async function renderGallery(container, options = {}) {
   } else {
     noResults.textContent = 'Usa el buscador para encontrar imágenes.';
     noResults.classList.remove('is-hidden');
+    refreshCollectionTotal();
   }
 
   autoResizeSearch();

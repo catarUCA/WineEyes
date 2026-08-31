@@ -5,12 +5,19 @@ services:
     container_name: backend-api
     ports:
       - "10000:8000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
     environment:
       - QDRANT_HOST=qdrant
       - QDRANT_PORT=6333
       - OLLAMA_HOST=http://ollama:11434
       - REMBG_URL=http://rembg-service:8001
-      - OCR_MODEL=glm-ocr:bf16
+      - OCR_MODEL=glm-ocr:latest
       - VISION_MODEL=gemma4:26b
       - TEXT_EMBED_MODEL=bge-m3:latest
       - IMAGE_DEST=/app/images/processed
@@ -20,11 +27,13 @@ services:
       - .env
     volumes:
       - ./src/Sistema-de-catalogacion-de-imagenes:/app/src
-      - ${IMAGE_DEST_HOST:-./runtime/processed}:/app/images/processed
-      - ${THUMB_DEST_HOST:-./runtime/thumbnails}:/app/images/thumbnails
-      - ${DEBUG_DIR_HOST:-./runtime/debug}:/app/debug
+      - ${IMAGE_DEST_HOST:-C:/Users/User/Documents/ProyectoEtiquetas/procesadas}:/app/images/processed
+      - ${THUMB_DEST_HOST:-C:/Users/User/Documents/ProyectoEtiquetas/miniaturas}:/app/images/thumbnails
+      - ${DEBUG_DIR_HOST:-C:/Users/User/Documents/ProyectoEtiquetas/debug}:/app/debug
+      - hf_cache:/root/.cache/huggingface
     networks:
-      - red-proyecto
+      - red-etiquetas
+      - red-contabilidad
     restart: unless-stopped
 
   rembg-service:
@@ -40,7 +49,7 @@ services:
               count: 1
               capabilities: [gpu]
     networks:
-      - red-proyecto
+      - red-etiquetas
     restart: unless-stopped
 
   # ollama:
@@ -83,8 +92,10 @@ services:
   #     - contabilidad-network
 
 networks:
-  red-proyecto:
+  red-etiquetas:
     driver: bridge
+  red-contabilidad:
+    external: true
 
 volumes:
   hf_cache:

@@ -1,4 +1,4 @@
-import { api, exploreImageUrl, prefetchEtiquetasMediaToken } from './api.js';
+import { api, exploreImageUrl, prefetchEtiquetasMediaToken, getEtiquetasMediaToken } from './api.js';
 import { toastError, toastWarn } from './toast.js';
 
 function existingCatalogThumb(existingPath) {
@@ -146,6 +146,7 @@ export function renderUploadModal(onDone, initialFiles = null) {
         <div class="upload-confirm-card-body">
           <p class="upload-confirm-card-title" title="${name}">${name}</p>
           <p class="upload-confirm-card-ocr">${ocr}</p>
+          <button type="button" class="app-btn app-btn-secondary app-btn-sm upload-afinar-btn" data-filename="${escapeHtml(evt.filename)}">Afinar recorte</button>
         </div>
       `;
       return card;
@@ -187,8 +188,59 @@ export function renderUploadModal(onDone, initialFiles = null) {
       return last;
     }
 
+    async function openAfinadorModal(filename) {
+      await prefetchEtiquetasMediaToken();
+      const motorToken = getEtiquetasMediaToken();
+      const afinadorUrl = new URL('afinador.html', window.location.href).href;
+      const htmlText = await fetch(afinadorUrl).then((r) => r.text());
+
+      const afinadorOverlay = document.createElement('div');
+      afinadorOverlay.className = 'app-modal afinador-overlay';
+      afinadorOverlay.setAttribute('role', 'dialog');
+      afinadorOverlay.setAttribute('aria-modal', 'true');
+      afinadorOverlay.style.zIndex = '70';
+
+      const card = document.createElement('div');
+      card.className = 'upload-dialog-card';
+      card.style.cssText = 'width:min(96vw,64rem);max-height:min(90vh,90dvh);overflow-y:auto;';
+      card.innerHTML = htmlText;
+      afinadorOverlay.appendChild(card);
+      document.body.appendChild(afinadorOverlay);
+
+      const apiBase = (`${window.ETIQUETAS_ORIGIN}/api`).replace(/\/$/, '');
+
+      function cerrarAfinador() {
+        afinadorOverlay.remove();
+      }
+
+      afinadorOverlay.addEventListener('click', (e) => {
+        if (e.target === afinadorOverlay) cerrarAfinador();
+      });
+
+      const v = window.ASSET_VERSION || '';
+      const mod = await import(`./afinador.js?v=${v}`);
+      mod.initAfinador(card, {
+        sessionId: currentSessionId,
+        filename: filename,
+        apiBase: apiBase,
+        jwt: motorToken,
+        onConfirm: (result) => {
+          if (result.preview_b64) updateCardCropPreview(filename, result.preview_b64);
+          cerrarAfinador();
+        },
+        onClose: cerrarAfinador,
+      });
+    }
+
     async function handleFiles(files) {
       if (!files?.length) return;
+
+      const MAX_FILES = 10;
+      if (files.length > MAX_FILES) {
+        const truncated = Array.from(files).slice(0, MAX_FILES);
+        toastWarn(`Máximo ${MAX_FILES} imágenes por lote. Se procesarán las primeras ${MAX_FILES}.`);
+        files = truncated;
+      }
 
       const progress = document.getElementById('ocr-progress');
       const bar = document.getElementById('ocr-bar');
@@ -257,6 +309,15 @@ export function renderUploadModal(onDone, initialFiles = null) {
         setProcessing(false);
       }
     }
+
+    document.getElementById('ocr-grid').addEventListener('click', (e) => {
+      const btn = e.target.closest('.upload-afinar-btn');
+      if (btn) {
+        e.preventDefault();
+        const filename = btn.dataset.filename;
+        if (filename) openAfinadorModal(filename);
+      }
+    });
 
     document.getElementById('select-all-btn').addEventListener('click', () => {
       const checks = document.querySelectorAll('#ocr-grid .upload-confirm-check-input');

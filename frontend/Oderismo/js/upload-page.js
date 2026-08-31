@@ -1,4 +1,4 @@
-import { renderUploadModal } from './upload.js';
+import { renderUploadModal } from './upload.js?v=2026-07-17b';
 
 export function renderUploadPage(container) {
   container.innerHTML = `

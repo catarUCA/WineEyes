@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Afinador de recortes — Oderismo</title>
+  <style>
+    :root {
+      --brand-50: #faf6f2;
+      --brand-100: #f3ece4;
+      --brand-200: #e7d6c7;
+      --brand-300: #d7ba9e;
+      --brand-400: #c3956f;
+      --brand-500: #a87449;
+      --brand-600: #8c5c36;
+      --brand-700: #71492c;
+      --brand-800: #5c3d27;
+      --brand-900: #4d3422;
+      --radius-xl: 16px;
+      --radius-lg: 12px;
+      --shadow-card: 0 4px 14px rgba(77, 52, 34, 0.08);
+      --shadow-panel: 0 4px 20px rgba(77, 52, 34, 0.05);
+      --text-primary: var(--brand-900);
+      --text-secondary: rgba(113, 73, 44, 0.85);
+      --text-muted: rgba(113, 73, 44, 0.55);
+      --surface: #fff;
+      --border: var(--brand-200);
+      --accent: var(--brand-700);
+      --accent-hover: var(--brand-800);
+      --bg: var(--brand-50);
+      --track-bg: var(--brand-200);
+      --danger: #b91c1c;
+      --danger-bg: #fee2e2;
+      --danger-text: #991b1b;
+      --success-bg: #dcfce7;
+      --success-text: #15803d;
+      --busy-bg: #fef9c3;
+      --busy-text: #854d0e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg);
+    }
+
+    .afinador-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .afinador-header h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--brand-900);
+    }
+
+    .afinador-header .sub {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .afinador-header .cerrar {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: none;
+      background: var(--brand-100);
+      color: var(--brand-700);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease, color 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .afinador-header .cerrar:hover {
+      background: var(--brand-200);
+      color: var(--brand-900);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 20px;
+      align-items: start;
+      padding: 20px 24px 24px;
+    }
+
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-panel);
+      margin-bottom: 16px;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .panel h2 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--brand-700);
+      margin: 0 0 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--brand-800);
+      margin: 12px 0 5px;
+    }
+
+    label:first-of-type { margin-top: 0; }
+
+    select, input[type="file"] {
+      width: 100%;
+      font: inherit;
+      font-size: 0.875rem;
+      padding: 9px 12px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-primary);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    select:focus, input[type="file"]:focus {
+      outline: none;
+      border-color: var(--brand-500);
+      box-shadow: 0 0 0 3px rgba(168, 116, 73, 0.2);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--brand-700);
+      margin: 4px 0;
+    }
+
+    .range-val {
+      float: right;
+      color: var(--brand-700);
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      font: inherit;
+      font-size: 0.875rem;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(113, 73, 44, 0.22);
+      transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 6px 20px rgba(113, 73, 44, 0.28);
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    button.secondary {
+      background: var(--surface);
+      color: var(--brand-800);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    button.secondary:hover {
+      background: var(--brand-50);
+      box-shadow: 0 4px 14px rgba(77, 52, 34, 0.08);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .analisis dl {
+      margin: 0;
+      display: grid;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+
+    .analisis .row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 8px;
+    }
+
+    .analisis dt {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .analisis dd {
+      margin: 0;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .ruta {
+      background: var(--brand-50);
+      border: 1px solid var(--brand-100);
+      border-radius: var(--radius-lg);
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      margin-top: 10px;
+      color: var(--brand-700);
+      line-height: 1.4;
+    }
+
+    .ruta strong { color: var(--brand-900); }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 700px) { .preview-grid { grid-template-columns: 1fr; } }
+
+    .preview-box {
+      background: var(--brand-100);
+      border-radius: var(--radius-lg);
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .preview-box img {
+      max-width: 100%;
+      max-height: 550px;
+      object-fit: contain;
+    }
+
+    .preview-box .placeholder {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .meta-out {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+      word-break: break-word;
+      line-height: 1.4;
+    }
+
+    .grupo {
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      margin-top: 6px;
+    }
+
+    .grupo:first-child {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .grupo-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin: 0 0 8px;
+    }
+
+    .status {
+      font-size: 0.85rem;
+      padding: 10px 14px;
+      border-radius: var(--radius-lg);
+      margin-top: 10px;
+    }
+
+    .status.ok { background: var(--success-bg); color: var(--success-text); }
+    .status.err { background: var(--danger-bg); color: var(--danger-text); }
+    .status.busy { background: var(--busy-bg); color: var(--busy-text); }
+
+    input[type="checkbox"] {
+      accent-color: var(--brand-700);
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    label:has(input[type="checkbox"]) {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="afinador-header">
+    <div>
+      <h1>Afinador de recortes</h1>
+      <p class="sub" id="af-header-filename"></p>
+    </div>
+    <button class="cerrar" id="btn-cerrar" title="Cerrar" type="button">&times;</button>
+  </div>
+
+  <div class="status err" id="aviso" hidden></div>
+
+  <div class="layout">
+    <aside>
+      <div class="panel analisis" id="panel-analisis" hidden>
+        <h2>Análisis automático</h2>
+        <dl id="analisis-dl"></dl>
+        <div class="ruta" id="analisis-razon"></div>
+      </div>
+
+      <div class="panel" id="panel-params">
+        <h2>Parámetros</h2>
+        <div id="controles"></div>
+        <button type="button" id="btn-aplicar">Aplicar recorte</button>
+        <button type="button" class="secondary" id="btn-reset">Restaurar sugeridos</button>
+        <button type="button" id="btn-guardar">Confirmar y cerrar</button>
+        <div class="status" id="status" hidden></div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="panel">
+        <h2>Vista previa</h2>
+        <div class="preview-grid">
+          <div>
+            <p style="font-weight:600;font-size:0.82rem;color:var(--brand-700);margin-bottom:6px;">Original</p>
+            <div class="preview-box" id="prev-orig"><span class="placeholder">Cargando…</span></div>
+          </div>
+          <div>
+            <p style="font-weight:600;font-size:0.82rem;color:var(--brand-700);margin-bottom:6px;">Recorte</p>
+            <div class="preview-box" id="prev-out"><span class="placeholder">Pulsa «Aplicar recorte»</span></div>
+            <p class="meta-out" id="meta-out"></p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

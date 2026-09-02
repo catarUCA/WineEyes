@@ -1,17 +1,32 @@
-services:
+# WineEyes — reproducible deployment stack
+# ---------------------------------------------------------------------------
+# Brings up the full application stack: FastAPI backend, background-removal
+# service, Ollama (OCR + VLM), Qdrant (vectors) and MariaDB (catalogue).
+#
+# Quick start:
+#   cp example.env .env      # then edit secrets/paths in .env
+#   docker compose up -d --build
+#
+# NOTE ON MODELS: ingestion requires the local Ollama models 'glm-ocr:latest'
+# and 'gemma4:26b', served by the custom image 'ollama-patched:0.24.0'. This
+# image and the glm-ocr weights are not on a public registry; see the
+# repository README for how to obtain/build them. The *evaluation* in eval/
+# does NOT need Ollama or a GPU: it runs from cached OCR/VLM outputs on CPU.
 
+services:
   app:
     build: .
+    image: wineeyes-backend:1.2.0
     container_name: backend-api
     ports:
       - "10000:8000"
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+    depends_on:
+      qdrant:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+      mariadb:
+        condition: service_healthy
     environment:
       - QDRANT_HOST=qdrant
       - QDRANT_PORT=6333
@@ -23,21 +38,33 @@ services:
       - IMAGE_DEST=/app/images/processed
       - THUMB_DEST=/app/images/thumbnails
       - DEBUG_DIR=/app/debug
+      - MYSQL_HOST=mariadb
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-oderismo}
+      - MYSQL_USER=${MYSQL_USER:-oderismo}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:?set MYSQL_PASSWORD in .env}
     env_file:
       - .env
     volumes:
       - ./src/Sistema-de-catalogacion-de-imagenes:/app/src
-      - ${IMAGE_DEST_HOST:-C:/Users/User/Documents/ProyectoEtiquetas/procesadas}:/app/images/processed
-      - ${THUMB_DEST_HOST:-C:/Users/User/Documents/ProyectoEtiquetas/miniaturas}:/app/images/thumbnails
-      - ${DEBUG_DIR_HOST:-C:/Users/User/Documents/ProyectoEtiquetas/debug}:/app/debug
+      - ${IMAGE_DEST_HOST:-./runtime/processed}:/app/images/processed
+      - ${THUMB_DEST_HOST:-./runtime/thumbnails}:/app/images/thumbnails
+      - ${DEBUG_DIR_HOST:-./runtime/debug}:/app/debug
       - hf_cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
     networks:
-      - red-etiquetas
-      - red-contabilidad
+      - wineeyes
     restart: unless-stopped
 
   rembg-service:
     build: ./rembg-service
+    image: wineeyes-rembg:1.2.0
     container_name: rembg-service
     ports:
       - "8001:8001"
@@ -49,53 +76,88 @@ services:
               count: 1
               capabilities: [gpu]
     networks:
-      - red-etiquetas
+      - wineeyes
     restart: unless-stopped
 
-  # ollama:
-  #   image: ollama-patched:0.24.0
-  #   container_name: ollama
-  #   restart: always
-  #   shm_size: "8gb"
-  #   ports:
-  #     - "11434:11434"
-  #   volumes:
-  #     - ollama_storage:/root/.ollama
-  #     - ollama_cache:/root/.cache
-  #   environment:
-  #     - NVIDIA_VISIBLE_DEVICES=all
-  #     - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-  #     - OLLAMA_NUM_GPU=999
-  #     - OLLAMA_LOAD_IN_MEMORY=0
-  #     - OLLAMA_CONTEXT_LENGTH=4096
-  #     - OLLAMA_FLASH_ATTENTION=1
-  #   deploy:
-  #     resources:
-  #       reservations:
-  #         devices:
-  #           - driver: nvidia
-  #             count: 1
-  #             capabilities: [ gpu ]
-  #   networks:
-  #     - contabilidad-network
+  ollama:
+    image: ollama-patched:0.24.0        # custom build; see README (not public)
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    shm_size: "8gb"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - OLLAMA_NUM_GPU=999
+      - OLLAMA_LOAD_IN_MEMORY=0
+      - OLLAMA_CONTEXT_LENGTH=4096
+      - OLLAMA_FLASH_ATTENTION=1
+    volumes:
+      - ollama_storage:/root/.ollama
+      - ollama_cache:/root/.cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+    networks:
+      - wineeyes
+    restart: unless-stopped
 
+  qdrant:
+    image: qdrant/qdrant:1.17.1          # pinned; matches the reported version
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c ':> /dev/tcp/127.0.0.1/6333'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+    networks:
+      - wineeyes
+    restart: unless-stopped
 
-  # qdrant:
-  #   image: qdrant/qdrant:latest
-  #   container_name: qdrant
-  #   restart: always
-  #   ports:
-  #     - "6333:6333"
-  #   volumes:
-  #     - qdrant_storage:/qdrant/storage
-  #   networks:
-  #     - contabilidad-network
+  mariadb:
+    image: mariadb:10.6                  # catalogue: users, roles, tags, notes
+    container_name: mariadb
+    environment:
+      - MARIADB_DATABASE=${MYSQL_DATABASE:-oderismo}
+      - MARIADB_USER=${MYSQL_USER:-oderismo}
+      - MARIADB_PASSWORD=${MYSQL_PASSWORD:?set MYSQL_PASSWORD in .env}
+      - MARIADB_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD in .env}
+    volumes:
+      - mariadb_storage:/var/lib/mysql
+      # Loads the released schema on first start (no user records/credentials):
+      - ./oderismo.sql:/docker-entrypoint-initdb.d/010-oderismo.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    networks:
+      - wineeyes
+    restart: unless-stopped
 
 networks:
-  red-etiquetas:
+  wineeyes:
     driver: bridge
-  red-contabilidad:
-    external: true
 
 volumes:
   hf_cache:
+  ollama_storage:
+  ollama_cache:
+  qdrant_storage:
+  mariadb_storage:

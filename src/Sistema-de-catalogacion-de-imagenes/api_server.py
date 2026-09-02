@@ -10,15 +10,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
 
-def _configured_origins() -> set[str]:
-    raw = os.getenv(
-        "ALLOWED_ORIGINS",
-        "http://localhost:3000,http://localhost:3300,http://localhost:5173",
-    )
-    return {origin.strip().rstrip("/") for origin in raw.split(",") if origin.strip()}
-
-
-ALLOWED_ORIGINS = _configured_origins()
+ALLOWED_ORIGINS = {
+    "http://localhost:3300",
+    "https://sibila.uca.es",
+    "https://etiquetaspacoodero.com",
+}
 
 from api.database import get_db, init_db
 from jose import jwt, JWTError
@@ -73,7 +69,14 @@ async def origin_block_middleware(request: Request, call_next):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=sorted(ALLOWED_ORIGINS),
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "http://localhost:3300",
+        "https://a22.uca.es",
+        "https://sibila.uca.es",
+        "https://etiquetaspacoodero.com",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -151,9 +154,8 @@ async def startup_event():
 
 
 @app.get("/images/{filename:path}")
-async def serve_image(filename: str, token: str = Query(None), request: Request = None):
+async def serve_image(filename: str, token: str = Query(None)):
     _auth_query(token)
-    _check_referer(request)
     path = os.path.join(IMAGE_DEST, filename)
     if not os.path.isfile(path):
         raise HTTPException(status_code=404, detail="Imagen no encontrada")
@@ -161,27 +163,26 @@ async def serve_image(filename: str, token: str = Query(None), request: Request 
 
 
 @app.get("/thumbs/{filename:path}")
-async def serve_thumb(filename: str, token: str = Query(None), request: Request = None):
+async def serve_thumb(filename: str, token: str = Query(None)):
     _auth_query(token)
-    _check_referer(request)
     path = os.path.join(THUMB_DEST, filename)
     if not os.path.isfile(path):
         raise HTTPException(status_code=404, detail="Miniatura no encontrada")
     return FileResponse(path)
 
 
-from api import routes_auth, routes_images, routes_search, routes_upload, routes_admin
+from api import routes_auth, routes_images, routes_search, routes_upload, routes_admin, routes_afinador
 
 app.include_router(routes_auth.router, prefix="/api")
 app.include_router(routes_images.router, prefix="/api")
 app.include_router(routes_search.router, prefix="/api")
 app.include_router(routes_upload.router, prefix="/api")
 app.include_router(routes_admin.router, prefix="/api")
+app.include_router(routes_afinador.router, prefix="/api")
 
 
 @app.get("/api/public/random-image")
 async def serve_random_image(request: Request):
-    _check_referer(request)
     retrieval_system = request.app.state.retrieval_system
     if retrieval_system is None:
         raise HTTPException(status_code=503, detail="Sistema no disponible")

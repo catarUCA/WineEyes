@@ -26,6 +26,11 @@ CLIP_DIM = 768
 TEXT_DIM = 1024
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
+# Fusion hibrida (RRF ponderado): se mantiene RRF pero con el denso dominante.
+# El sparse solo matiza casi-empates. Ajustables por variable de entorno.
+RRF_DENSE_WEIGHT = float(os.getenv("RRF_DENSE_WEIGHT", "1.0"))
+RRF_SPARSE_WEIGHT = float(os.getenv("RRF_SPARSE_WEIGHT", "0.1"))
+
 _clip_model = None
 _clip_preprocess = None
 _clip_lock = threading.Lock()
@@ -44,7 +49,7 @@ def _get_clip():
                 import open_clip
                 logger.info("Loading CLIP ViT-L-14 (CPU)...")
                 _clip_model, _, _clip_preprocess = open_clip.create_model_and_transforms(
-                    "ViT-L-14", pretrained="laion2b_s32b_b82k", device="cpu"
+                    "ViT-L-14", pretrained="laion2b_s32b_b82k",                     device="cuda"
                 )
                 _clip_model.eval()
                 logger.info("CLIP loaded")
@@ -57,9 +62,9 @@ def _get_bge():
         with _bge_lock:
             if _bge_model is None:
                 from FlagEmbedding import BGEM3FlagModel
-                logger.info("Loading BGE-M3 locally via FlagEmbedding (CPU)...")
-                # use_fp16=False ideal para CPU/commodity hardware
-                _bge_model = BGEM3FlagModel('BAAI/bge-m3', use_fp16=False)
+                logger.info("Loading BGE-M3 locally via FlagEmbedding (GPU)...")
+                # use_fp16=True + device=cuda para GPU
+                _bge_model = BGEM3FlagModel('BAAI/bge-m3', use_fp16=True, device="cuda")
                 logger.info("BGE-M3 loaded successfully")
     return _bge_model
 
@@ -79,6 +84,7 @@ def _rank_unique_labels(hits):
                 "segment_rank": segment_rank,
                 "path": hit.payload["path"],
                 "text": hit.payload["segment_text"],
+                "score": hit.score,
             }
 
     ordered = sorted(
@@ -88,10 +94,26 @@ def _rank_unique_labels(hits):
     return [dict(item, label_rank=rank) for rank, item in enumerate(ordered, start=1)]
 
 
-def _fuse_label_rankings(dense_hits, sparse_hits, rrf_k: int = 60):
-    """Fuse dense and sparse label rankings with at most one vote per branch."""
+def _fuse_label_rankings(
+    dense_hits,
+    sparse_hits,
+    rrf_k: int = 60,
+    w_dense: float = RRF_DENSE_WEIGHT,
+    w_sparse: float = RRF_SPARSE_WEIGHT,
+):
+    """Fuse dense and sparse label rankings with weighted RRF (dense dominant).
+
+    Se mantiene RRF para el orden, pero cada rama vota con un peso: el denso
+    domina y el sparse solo matiza. La puntuacion expuesta (`score`) es la
+    similitud coseno densa del mejor segmento (0-1), interpretable como % y
+    usable como umbral, en lugar de la magnitud RRF (que no lo era).
+    """
     fused = {}
-    for hits in (dense_hits, sparse_hits):
+    dense_sim = {}
+    for hits, weight, is_dense in (
+        (dense_hits, w_dense, True),
+        (sparse_hits, w_sparse, False),
+    ):
         for item in _rank_unique_labels(hits):
             img_id = item["img_id"]
             if img_id not in fused:
@@ -101,11 +123,18 @@ def _fuse_label_rankings(dense_hits, sparse_hits, rrf_k: int = 60):
                     "rrf_score": 0.0,
                     "text": item["text"],
                 }
-            fused[img_id]["rrf_score"] += 1.0 / (rrf_k + item["label_rank"])
+            fused[img_id]["rrf_score"] += weight / (rrf_k + item["label_rank"])
+            if is_dense:
+                dense_sim[img_id] = item["score"]
 
-    for item in fused.values():
-        item["score"] = item["rrf_score"]
-    return sorted(fused.values(), key=lambda item: (-item["score"], item["id"]))
+    for img_id, item in fused.items():
+        item["similarity"] = max(0.0, min(1.0, dense_sim.get(img_id, 0.0)))
+        item["score"] = item["similarity"]
+
+    return sorted(
+        fused.values(),
+        key=lambda item: (-item["rrf_score"], -item["similarity"], item["id"]),
+    )
 
 
 class ImageRetrievalSystem:
@@ -132,10 +161,11 @@ class ImageRetrievalSystem:
     def _embed_image(self, img_base64: str) -> list:
         import torch
         model, preprocess = _get_clip()
+        device = next(model.parameters()).device
         img_bytes = base64.b64decode(img_base64)
         img = Image.open(BytesIO(img_bytes)).convert("RGB")
         with torch.no_grad():
-            image = preprocess(img).unsqueeze(0)
+            image = preprocess(img).unsqueeze(0).to(device)
             feats = model.encode_image(image)
             feats = feats / feats.norm(dim=-1, keepdim=True)
             return feats.squeeze(0).tolist()
@@ -420,7 +450,14 @@ class ImageRetrievalSystem:
 
         # Agregar segmentos por etiqueta antes de aplicar RRF.
         items = _fuse_label_rankings(dense_hits, sparse_hits, rrf_k=60)
-        logger.info(f"Found {len(items)} hybrid text matches via client RRF")
+
+        if distance_threshold and distance_threshold > 0:
+            items = [it for it in items if it.get("score", 0.0) >= distance_threshold]
+
+        logger.info(
+            f"Found {len(items)} hybrid text matches via client RRF "
+            f"(threshold={distance_threshold})"
+        )
         return items
 
     def search_by_tags(self, image_ids: list[int], text_query: str = None, score_threshold: float = 0.0) -> list[dict]:
@@ -473,7 +510,14 @@ class ImageRetrievalSystem:
         ).points
 
         ranked = _fuse_label_rankings(dense_hits, sparse_hits, rrf_k=60)
-        logger.info(f"Found {len(ranked)} tag+hybrid matches via client RRF")
+
+        if score_threshold and score_threshold > 0:
+            ranked = [it for it in ranked if it.get("score", 0.0) >= score_threshold]
+
+        logger.info(
+            f"Found {len(ranked)} tag+hybrid matches via client RRF "
+            f"(threshold={score_threshold})"
+        )
         return ranked
 
     def get_all_tags(self) -> list[str]:

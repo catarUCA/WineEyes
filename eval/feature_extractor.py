@@ -13,7 +13,7 @@ import ollama
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-OCR_MODEL = os.getenv("OCR_MODEL", "glm-ocr:bf16")
+OCR_MODEL = os.getenv("OCR_MODEL", "glm-ocr:latestet")
 VISION_MODEL = os.getenv("VISION_MODEL", "gemma4:26b")
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 

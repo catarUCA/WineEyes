@@ -3,7 +3,7 @@ Ablation de fusion OCR+VLM en dos fases separadas para evitar saturacion de VRAM
 
   Fase 1 - OCR:
     python -m eval.ablation_fusion --phase ocr
-    - Ejecuta glm-ocr:bf16 sobre las 50 imagenes de muestra
+    - Ejecuta glm-ocr:latest sobre las 50 imagenes de muestra
     - Guarda los textos en data/ablation_cache.json
     - Descarga el modelo de VRAM (keep_alive=0) y espera 30 s
     - Termina
@@ -78,7 +78,7 @@ def _unload_model(model: str, wait: int = 30):
 # ---------------------------------------------------------------------------
 
 def phase_ocr(sample):
-    """Ejecuta OCR con glm-ocr:bf16, guarda en cache, descarga modelo."""
+    """Ejecuta OCR con glm-ocr:latest, guarda en cache, descarga modelo."""
     cache = _load_cache()
     need = [r for r in sample if r["id"] not in cache["ocr"]]
     if not need:

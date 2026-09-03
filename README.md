@@ -42,7 +42,7 @@ audit.
 - `data/`: queries, qrels, cached model outputs, and annotation files
   (including `ocr_groundtruth.csv` for the crop/OCR evaluation).
 - `results/`: audit and run log; evaluation artefacts are generated here.
-- `WinEyes.sql`: MariaDB/MySQL catalogue schema; contains no user records or
+- `WineEyes.sql`: MariaDB/MySQL catalogue schema; contains no user records or
   credentials.
 
 ## Requirements
@@ -154,7 +154,7 @@ Text embeddings are served by Ollama (`bge-m3:latest`) in this stack. The
 standalone `embedding-service/` (port `8002`) is an optional alternative and
 is not started by this compose file.
 
-The compose stack pins `qdrant/qdrant:1.17.1` and loads `WinEyes.sql` into
+The compose stack pins `qdrant/qdrant:1.17.1` and loads `WineEyes.sql` into
 MariaDB on first start. Set `MYSQL_PASSWORD` and `MYSQL_ROOT_PASSWORD` in
 `.env`; the container fails fast if they are missing. Under compose the backend
 reaches the database by service name (`mariadb`); for a local, non-Docker run

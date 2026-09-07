@@ -78,8 +78,8 @@ def _config_rankings(branches):
 
 
 LABELS = {
-    "dense_only": "Dense only (semantico)",
-    "sparse_only": "Sparse only (lexico)",
+    "dense_only": "Dense only",
+    "sparse_only": "Sparse only (lexical)",
     "rrf_k10": "Hybrid RRF, $k=10$",
     "rrf_k30": "Hybrid RRF, $k=30$",
     "rrf_k60": "Hybrid RRF, $k=60$ (default)",
